@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <title>Queueless - Admin</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-    <h1>Admin Panel</h1>
+<div class="navbar">
+    <h2>QUEUELESS – Admin Dashboard</h2>
+</div>
 
-    <div class="card">
-        <h2>Current Token</h2>
-        <p>Token No: --</p>
-        <button>Call Next</button>
-    </div>
+<div class="container">
+    <h3>Token List</h3>
+
+    <table class="token-table">
+        <tr>
+            <th>Token No</th>
+            <th>Name</th>
+            <th>Purpose</th>
+            <th>Counter</th>
+        </tr>
+        <tr>
+            <td>T-1</td>
+            <td>Rahul</td>
+            <td>Enquiry</td>
+            <td>Counter A</td>
+        </tr>
+        <tr>
+            <td>T-2</td>
+            <td>Ayesha</td>
+            <td>Payment</td>
+            <td>Counter B</td>
+        </tr>
+    </table>
+</div>
 
 </body>
 </html>

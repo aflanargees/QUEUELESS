@@ -1,26 +1,42 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f4f7;
+.form-box {
+    background: white;
+    padding: 25px;
+    max-width: 350px;
+    margin: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.form-box input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.form-box button {
+    width: 100%;
+    padding: 10px;
+    background: #2f89cf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.token-table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+.token-table th,
+.token-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
     text-align: center;
 }
 
-h1 {
-    color: #1f3c88;
-}
-
-.card {
-    background: #ffffff;
-    width: 300px;
-    margin: 20px auto;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-}
-
-button {
-    background-color: #1f3c88;
+.token-table th {
+    background: #2f89cf;
     color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
 }
