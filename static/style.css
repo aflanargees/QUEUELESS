@@ -1,42 +1,261 @@
-.form-box {
+body {
+    font-family: Arial;
+    background: #eef2f3;
+}
+
+.container {
+    width: 420px;
+    margin: 60px auto;
     background: white;
-    padding: 25px;
-    max-width: 350px;
-    margin: auto;
+    padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.form-box input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-}
-
-.form-box button {
-    width: 100%;
-    padding: 10px;
-    background: #2f89cf;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.token-table {
-    width: 80%;
-    margin: auto;
-    border-collapse: collapse;
-}
-
-.token-table th,
-.token-table td {
-    border: 1px solid #ddd;
-    padding: 10px;
     text-align: center;
 }
 
-.token-table th {
-    background: #2f89cf;
+.box input, textarea, select, button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+span {
+    color: #007bff;
+}
+
+.captcha-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sidebar {
+    width: 200px;
+    height: 100vh;
+    background: #007bff;
+    position: fixed;
+    padding-top: 20px;
+}
+
+.sidebar a {
+    display: block;
     color: white;
+    padding: 12px;
+    text-decoration: none;
+}
+
+.main {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+#result {
+    margin-top: 15px;
+    font-weight: bold;
+}
+/* Top Header Bar */
+.topbar {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(90deg, #0056b3, #007bff);
+    color: white;
+    display: flex;
+    align-items: center;
+    padding-left: 240px; /* aligns with sidebar */
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Brand styling */
+.brand {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.brand span {
+    display: block;
+    font-size: 12px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    opacity: 0.9;
+}
+
+/* Push main content down */
+.main {
+    margin-top: 80px;
+}
+
+/* Sidebar adjustment */
+.sidebar {
+    margin-top: 60px;
+}
+/* Content Layout */
+.content {
+    margin-left: 220px;
+    margin-top: 80px;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Left Panel */
+.left-panel {
+    flex: 2;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Right Panel */
+.right-panel {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Status Cards */
+.status-box {
+    background: #eef2f3;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+}
+
+.status-box h1 {
+    font-size: 36px;
+    color: #007bff;
+}
+
+/* Inputs */
+.left-panel input,
+.left-panel textarea,
+.left-panel select,
+.left-panel button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}
+/* Content Layout */
+.content {
+    margin-left: 220px;
+    margin-top: 80px;
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Left Panel */
+.left-panel {
+    flex: 2;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Right Panel */
+.right-panel {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Status Cards */
+.status-box {
+    background: #eef2f3;
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+}
+
+.status-box h1 {
+    font-size: 36px;
+    color: #007bff;
+}
+
+/* Inputs */
+.left-panel input,
+.left-panel textarea,
+.left-panel select,
+.left-panel button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+}  
+/* CAPTCHA container */
+.captcha-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+/* CAPTCHA text box */
+#captcha {
+    width: 90px;              /* 👈 controls rectangle width */
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    letter-spacing: 2px;
+    padding: 8px 0;
+    background: #e9f2ff;
+    border: 1px solid #007bff;
+    border-radius: 6px;
+    color: #007bff;
+}
+
+/* Refresh button */
+.refresh-btn {
+    width: 40px;              /* 👈 small square */
+    height: 40px;
+    padding: 0;
+    font-size: 18px;
+    border-radius: 6px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.refresh-btn:hover {
+    background: #0056b3;
+}
+/* CAPTCHA refresh button – icon style */
+.captcha-refresh {
+    width: 42px;
+    height: 42px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hover effect */
+.captcha-refresh:hover {
+    background: #0056b3;
+}
+/* Reduce input LENGTH (width) on welcome page */
+.container input[type="tel"],
+.container input[type="text"] {
+    width: 85%;           /* 👈 reduce length */
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }

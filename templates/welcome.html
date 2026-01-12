@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>QUEUELESS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Welcome to <span>QUEUELESS</span></h1>
+    <p>
+        Digital Queue Management and Token Generation System<br>
+        for Panchayat Office
+    </p>
+
+    <div class="box">
+        <input type="tel" placeholder="Enter Phone Number">
+
+        <div class="captcha-box">
+            <span id="captcha">X7P9A</span>
+            <button type="button" class="captcha-refresh" onclick="refreshCaptcha()">⟳</button>
+        </div>
+
+        <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+
+        <button onclick="validateCaptcha()">Generate OTP</button>
+
+        <input type="text" id="otp" placeholder="Enter OTP" style="display:none">
+
+        <button id="verifyBtn" style="display:none" onclick="goToUser()">Verify OTP</button>
+    </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
+
+
+
+

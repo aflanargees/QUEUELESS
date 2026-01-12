@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- Top Header -->
+<div class="topbar">
+    <div class="brand">
+        QUEUELESS
+        <span>Digital Queue Management System</span>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <a href="/">Home</a>
+    <a href="#">Live Status</a>
+    <a href="#">Services</a>
+    <a href="#">Help</a>
+</div>
+
+<!-- Main Content -->
+<div class="content">
+
+    <!-- LEFT SIDE: Token Generation -->
+    <div class="left-panel">
+        <h2>Generate Token</h2>
+
+        <input type="text" placeholder="Full Name">
+        <input type="text" placeholder="House Number">
+        <input type="text" placeholder="Ward Number">
+        <textarea placeholder="Address"></textarea>
+
+        <select>
+            <option>Select Purpose</option>
+            <option>Birth Certificate</option>
+            <option>Death Certificate</option>
+            <option>Income Certificate</option>
+            <option>Caste Certificate</option>
+            <option>Residence Certificate</option>
+            <option>Marriage Registration</option>
+            <option>Pension Services</option>
+            <option>Property Tax</option>
+            <option>Complaints</option>
+        </select>
+
+        <button onclick="generateToken()">Generate Token</button>
+    </div>
+
+    <!-- RIGHT SIDE: Live Dashboard -->
+    <div class="right-panel">
+        <h2>Live Counter Status</h2>
+
+        <div class="status-box">
+            <p>Current Token</p>
+            <h1 id="liveToken">--</h1>
+        </div>
+
+        <div class="status-box">
+            <p>Current Counter</p>
+            <h1 id="liveCounter">--</h1>
+        </div>
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
+
