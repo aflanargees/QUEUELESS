@@ -1,39 +1,92 @@
-<!DOCTYPE html>
-<html>
+ <!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Queueless - Admin</title>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Auto refresh every 5 seconds -->
+    <script>
+        setInterval(function () {
+            window.location.reload();
+        }, 5000);
+    </script>
 </head>
 <body>
 
-<div class="navbar">
-    <h2>QUEUELESS – Admin Dashboard</h2>
+<!-- ================= TOP HEADER ================= -->
+<div class="topbar">
+    <div class="brand">
+        QUEUELESS
+        <span>Admin Dashboard</span>
+    </div>
 </div>
 
-<div class="container">
-    <h3>Token List</h3>
+<!-- ================= MAIN CONTENT ================= -->
+<div class="content">
+    <div class="left-panel">
+        <h2>Current Tokens</h2>
 
-    <table class="token-table">
-        <tr>
-            <th>Token No</th>
-            <th>Name</th>
-            <th>Purpose</th>
-            <th>Counter</th>
-        </tr>
-        <tr>
-            <td>T-1</td>
-            <td>Rahul</td>
-            <td>Enquiry</td>
-            <td>Counter A</td>
-        </tr>
-        <tr>
-            <td>T-2</td>
-            <td>Ayesha</td>
-            <td>Payment</td>
-            <td>Counter B</td>
-        </tr>
-    </table>
+        {% if tokens %}
+        <table border="1" width="100%" cellpadding="8" cellspacing="0">
+            <tr>
+                <th>Token</th>
+                <th>Counter</th>
+                <th>Name</th>
+                <th>District</th>
+                <th>Panchayat</th>
+                <th>Ward</th>
+                <th>Purpose</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+            {% for t in tokens %}
+            <tr>
+                <td>{{ t.token_number }}</td>
+                <td>{{ t.counter_number }}</td>
+                <td>{{ t.name }}</td>
+                <td>{{ t.district }}</td>
+                <td>{{ t.panchayat }}</td>
+                <td>{{ t.ward }}</td>
+                <td>{{ t.purpose }}</td>
+                <td>{{ t.status }}</td>
+                <td>
+    {% if t.status == "Waiting" %}
+        <button onclick="serveToken({{ t.token_number }})">Serve</button>
+
+    {% elif t.status == "Serving" %}
+        <button onclick="doneToken({{ t.token_number }})">Done</button>
+
+    {% else %}
+        <b>Completed</b>
+    {% endif %}
+</td>
+
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            <p>No tokens generated yet.</p>
+        {% endif %}
+    </div>
 </div>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+function serveToken(tokenNo) {
+    fetch("/serve_token/" + tokenNo)
+        .then(() => window.location.reload());
+}
+</script>
+<script>
+function doneToken(tokenNo) {
+    fetch("/done_token/" + tokenNo)
+        .then(() => {
+            window.location.reload();
+        });
+}
+</script>
 
 </body>
 </html>
