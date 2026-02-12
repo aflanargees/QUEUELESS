@@ -1,0 +1,945 @@
+district_name,panchayat_name
+Thiruvananthapuram,Aryanad
+Thiruvananthapuram,Kallara
+Thiruvananthapuram,Karavaram
+Thiruvananthapuram,Maranalloor
+Thiruvananthapuram,Nemom
+Thiruvananthapuram,Kanjiramkulam
+Thiruvananthapuram,Kalliyoor
+Thiruvananthapuram,Venganoor
+Thiruvananthapuram,Kulathoor
+Thiruvananthapuram,Kazhakkoottam
+Thiruvananthapuram,Sreekariyam
+Thiruvananthapuram,Pothencode
+Thiruvananthapuram,Andoorkonam
+Thiruvananthapuram,Kadinamkulam
+Thiruvananthapuram,Iraanveld
+Thiruvananthapuram,Mangalapuram
+Thiruvananthapuram,Pandalam-Kadakkavoor
+Thiruvananthapuram,Anchuthengu
+Thiruvananthapuram,Azhoor
+Thiruvananthapuram,Poovachal
+Thiruvananthapuram,Kallikadu
+Thiruvananthapuram,Vazhayila
+Thiruvananthapuram,Tholicode
+Thiruvananthapuram,Vithura
+Thiruvananthapuram,Kottoor
+Thiruvananthapuram,Palode
+Thiruvananthapuram,Peringamala
+Thiruvananthapuram,Nedumangad
+Thiruvananthapuram,Karimkunnam
+Thiruvananthapuram,Peyad
+Thiruvananthapuram,Thachottukavu
+Thiruvananthapuram,Malayinkeezhu
+Thiruvananthapuram,Pallichal
+Thiruvananthapuram,Karamana
+Thiruvananthapuram,Killiyoor
+Thiruvananthapuram,Kovalam
+Thiruvananthapuram,Poovar
+Thiruvananthapuram,Vizhinjam
+Thiruvananthapuram,Vellarada
+Thiruvananthapuram,Ottasekharamangalam
+Thiruvananthapuram,Perumkadavila
+Thiruvananthapuram,Kulathupuzha
+Thiruvananthapuram,Aryancode
+Thiruvananthapuram,Kottukal
+Thiruvananthapuram,Parassala
+Thiruvananthapuram,Amboori
+Thiruvananthapuram,Vallakkadavu
+Thiruvananthapuram,Chenkal
+Thiruvananthapuram,Thrikkannapuram
+Thiruvananthapuram,Thirupuram
+Thiruvananthapuram,Poovathoor
+Thiruvananthapuram,Kunnathukal
+Thiruvananthapuram,Puthukulangara
+Thiruvananthapuram,Kollayil
+Thiruvananthapuram,Aynavaram
+Thiruvananthapuram,Payyappady
+Thiruvananthapuram,Kottappuram
+Thiruvananthapuram,Karavaloor
+Thiruvananthapuram,Mylachal
+Thiruvananthapuram,Paruthippara
+Thiruvananthapuram,Kalliyoor
+Thiruvananthapuram,Venniyoor
+Thiruvananthapuram,Ulloor
+Thiruvananthapuram,Mudavoorpara
+Thiruvananthapuram,Puliyarakonam
+Thiruvananthapuram,Pachalloor
+Thiruvananthapuram,Enikkara
+Thiruvananthapuram,Myladumpara
+Thiruvananthapuram,Thiruvallam
+Thiruvananthapuram,Kanjirampara
+Thiruvananthapuram,Maruthankuzhi
+Thiruvananthapuram,Nanthancode
+Thiruvananthapuram,Pattom
+Thiruvananthapuram,Peroorkada
+Thiruvananthapuram,Kowdiar
+Thiruvananthapuram,Vellayambalam
+Kollam,Adichanalloor
+Kollam,Adoor
+Kollam,Aryankavu
+Kollam,Chathannoor
+Kollam,Chavara
+Kollam,Clappana
+Kollam,East Kallada
+Kollam,Elampalloor
+Kollam,Isthamcode
+Kollam,Ivarkala
+Kollam,Kadavoor
+Kollam,Kallada
+Kollam,Kalluvathukkal
+Kollam,Kannanaloor
+Kollam,Kannimei
+Kollam,Karavaloor
+Kollam,Kareepra
+Kollam,Karthikappally
+Kollam,Kattampally
+Kollam,Kavassery
+Kollam,Kilikollur
+Kollam,Kizhakkekallada
+Kollam,Kollam Rural
+Kollam,Kollayil
+Kollam,Koottikkada
+Kollam,Kottamkara
+Kollam,Kottarakkara
+Kollam,Kulahada
+Kollam,Kulasekharapuram
+Kollam,Kummil
+Kollam,Kundara
+Kollam,Kunnathur
+Kollam,Kuttichal
+Kollam,Mayyanad
+Kollam,Mylakkad
+Kollam,Nedumpaana
+Kollam,Neendakara
+Kollam,Nooranadu
+Kollam,Panayam
+Kollam,Pavithreswaram
+Kollam,Peringanadu
+Kollam,Perinad
+Kollam,Pozhikara
+Kollam,Sasthamkotta
+Kollam,Sooranad North
+Kollam,Sooranad South
+Kollam,Thazhava
+Kollam,Thevalakkara
+Kollam,Thekkumbhagam
+Kollam,Thodiyoor
+Kollam,Thrikkadavoor
+Kollam,Thrikkovilvattom
+Kollam,Thrikkanamangal
+Kollam,Thuvayoor
+Kollam,Ummannoor
+Kollam,Vadakkadathucavu
+Kollam,Vadakkevila
+Kollam,Valakom
+Kollam,Vallikunnam
+Kollam,Vavvakkavu
+Kollam,Vengeri
+Kollam,West Kallada
+Pathanamthitta,Alangad
+Pathanamthitta,Anicadu
+Pathanamthitta,Ayiroor
+Pathanamthitta,Chenneerkara
+Pathanamthitta,Elanthoor
+Pathanamthitta,Eraviperoor
+Pathanamthitta,Ezhumattoor
+Pathanamthitta,Kallooppara
+Pathanamthitta,Kadapra
+Pathanamthitta,Kadungalloor
+Pathanamthitta,Kadambanad
+Pathanamthitta,Kalanjoor
+Pathanamthitta,Kozhencherry
+Pathanamthitta,Konni
+Pathanamthitta,Koodal
+Pathanamthitta,Konnithazham
+Pathanamthitta,Mannar
+Pathanamthitta,Mezhuveli
+Pathanamthitta,Mulakuzha
+Pathanamthitta,Omalloor
+Pathanamthitta,Padanilam
+Pathanamthitta,Padom
+Pathanamthitta,Pandalam
+Pathanamthitta,Parakode
+Pathanamthitta,Perinad
+Pathanamthitta,Perumpetty
+Pathanamthitta,Pramadom
+Pathanamthitta,Ranni Angadi
+Pathanamthitta,Ranni Pazhavangadi
+Pathanamthitta,Ranni Perunad
+Pathanamthitta,Ranni Valiya Paika
+Pathanamthitta,Tiruvalla
+Pathanamthitta,Thengumkavu
+Pathanamthitta,Thirumoolapuram
+Pathanamthitta,Thottapuzhassery
+Pathanamthitta,Ullannur
+Pathanamthitta,Vaipur
+Pathanamthitta,Vakayar
+Pathanamthitta,Vallaserry
+Pathanamthitta,Vechoochira
+Pathanamthitta,Vendar
+Pathanamthitta,Venmony
+Pathanamthitta,Enadimangalam
+Pathanamthitta,Kulathupuzha
+Pathanamthitta,Nedumangad Rural
+Pathanamthitta,Kozhuvanal
+Pathanamthitta,Kottangal
+Pathanamthitta,Pullad
+Pathanamthitta,Nirannam
+Pathanamthitta,Perunad
+Pathanamthitta,Kulanada
+Pathanamthitta,Ezhamkulam
+Pathanamthitta,Thannithode
+Alappuzha,Aryad
+Alappuzha,Aroor
+Alappuzha,Ambalappuzha North
+Alappuzha,Ambalappuzha South
+Alappuzha,Bharanikkavu
+Alappuzha,Chengannur
+Alappuzha,Chennithala
+Alappuzha,Cheppad
+Alappuzha,Chunakkara
+Alappuzha,Devikulangara
+Alappuzha,Haripad
+Alappuzha,Kalavoor
+Alappuzha,Karthikappally
+Alappuzha,Kanjikuzhy
+Alappuzha,Kainakary
+Alappuzha,Kadakkarapally
+Alappuzha,Kuthiathode
+Alappuzha,Kanjirappally
+Alappuzha,Komalapuram
+Alappuzha,Kumarapuram
+Alappuzha,Kanjiramchira
+Alappuzha,Kadappuram
+Alappuzha,Mannar
+Alappuzha,Mavelikkara
+Alappuzha,Moncombu
+Alappuzha,Muhamma
+Alappuzha,Nedumudy
+Alappuzha,Nooranad
+Alappuzha,Pathiyoor
+Alappuzha,Pulincunnu
+Alappuzha,Pandalam Thekkekara
+Alappuzha,Parassala
+Alappuzha,Perumbalam
+Alappuzha,Perumpadappu
+Alappuzha,Punnapra North
+Alappuzha,Punnapra South
+Alappuzha,Pandalam
+Alappuzha,Puliyoor
+Alappuzha,Ramankary
+Alappuzha,Sasthamcotta
+Alappuzha,Thalavady
+Alappuzha,Thazhakkara
+Alappuzha,Thakazhi
+Alappuzha,Thalavady North
+Alappuzha,Thalavady South
+Alappuzha,Thanneermukkom
+Alappuzha,Thalavady Muri
+Alappuzha,Thrikkunnapuzha
+Alappuzha,Thuravoor North
+Alappuzha,Thuravoor South
+Alappuzha,Vallikunnam
+Alappuzha,Veeyapuram
+Alappuzha,Vazhapally
+Alappuzha,Venmony
+Alappuzha,Vettilaikkulam
+Alappuzha,Vezhapra
+Alappuzha,Karumadi
+Alappuzha,Pulincunnu East
+Alappuzha,Pulincunnu West
+Alappuzha,Mannanchery
+Alappuzha,Mararikulam North
+Alappuzha,Mararikulam South
+Alappuzha,Chertala South
+Alappuzha,Chertala North
+Alappuzha,Kaithavana
+Alappuzha,Arattupuzha
+Alappuzha,Kumarapuram North
+Alappuzha,Kumarapuram South
+Alappuzha,Valiyakulangara
+Alappuzha,Komalappuram West
+Alappuzha,Komalappuram East
+Alappuzha,Mullackal
+Alappuzha,Pallipuram
+Alappuzha,Kareelakulangara
+Alappuzha,Pathirappally
+Alappuzha,Erattakulangara
+Alappuzha,Champakkulam
+Alappuzha,Paravoor
+Alappuzha,Mavelikkara Thekkekara
+Kottayam,Athirampuzha
+Kottayam,Aymanam
+Kottayam,Ayyampuzha
+Kottayam,Ayarkunnam
+Kottayam,Changanassery
+Kottayam,Chirakkadavu
+Kottayam,Chirayinkeezhu
+Kottayam,Changanacherry West
+Kottayam,Ettumanoor
+Kottayam,Erattupetta
+Kottayam,Eraviperoor
+Kottayam,Kadanad
+Kottayam,Kaduthuruthy
+Kottayam,Kalamassery
+Kottayam,Kallara
+Kottayam,Kangazha
+Kottayam,Karukachal
+Kottayam,Kanjirappally
+Kottayam,Karimbil
+Kottayam,Kidangoor
+Kottayam,Kodanchery
+Kottayam,Kodungoor
+Kottayam,Koduvayur
+Kottayam,Kooroppada
+Kottayam,Koottickal
+Kottayam,Kottayam
+Kottayam,Kothanalloor
+Kottayam,Kudamaloor
+Kottayam,Kuravilangad
+Kottayam,Kurichy
+Kottayam,Kurisumoodu
+Kottayam,Kuttanadu
+Kottayam,Manarcadu
+Kottayam,Manjoor
+Kottayam,Manimala
+Kottayam,Mundakayam
+Kottayam,Mutholy
+Kottayam,Mathur
+Kottayam,Meenachil
+Kottayam,Meenadom
+Kottayam,Nedumkunnam
+Kottayam,Neendoor
+Kottayam,Neericadu
+Kottayam,Pala
+Kottayam,Pamapady
+Kottayam,Paika
+Kottayam,Parathodu
+Kottayam,Peruva
+Kottayam,Plassanal
+Kottayam,Poothakuzhy
+Kottayam,Purappuzha
+Kottayam,Puthuppally
+Kottayam,Ranny
+Kottayam,Ramapuram
+Kottayam,Sasthamkotta
+Kottayam,Thidanadu
+Kottayam,Thiruvanchoor
+Kottayam,Thottakam
+Kottayam,Thootha
+Kottayam,Thazhathangady
+Kottayam,Thuruthy
+Kottayam,Ulloor
+Kottayam,Uzhavoor
+Kottayam,Vaikom
+Kottayam,Vakathanam
+Kottayam,Vazhoor
+Kottayam,Vechoor
+Kottayam,Veliyannoor
+Kottayam,Velloor
+Kottayam,Vijayapuram
+Kottayam,Virutamala
+Kottayam,Puliyannoor
+Kottayam,Athiyamkal
+Kottayam,Edamattom
+Kottayam,Monippally
+Idukki,Adimali
+Idukki,Anavilasam
+Idukki,Anakkara
+Idukki,Ayyappancoil
+Idukki,Bisonvalley
+Idukki,Chakkupallam
+Idukki,Chinnakkanal
+Idukki,Devikulam
+Idukki,Edamalakudy
+Idukki,Ellakkal
+Idukki,Erattayar
+Idukki,Kattappana
+Idukki,Kumily
+Idukki,Konnathady
+Idukki,Kanjikkuzhy
+Idukki,Kurinjimala
+Idukki,Karimban
+Idukki,Kattapana
+Idukki,Kattappana East
+Idukki,Kattappana North
+Idukki,Kattappana South
+Idukki,Mankulam
+Idukki,Muttom
+Idukki,Moolamattom
+Idukki,Moolamattom East
+Idukki,Nedumkandam
+Idukki,Painavu
+Idukki,Peruvanthanam
+Idukki,Pallivasal
+Idukki,Pannoor
+Idukki,Periyar
+Idukki,Puttady
+Idukki,Puliyanmala
+Idukki,Ramakkalmedu
+Idukki,Santhanpara
+Idukki,Senapathy
+Idukki,Suryanelli
+Idukki,Thopramkudy
+Idukki,Udumbanchola
+Idukki,Udumbannoor
+Idukki,Vandanmedu
+Idukki,Vellathooval
+Idukki,Thankamani
+Idukki,Vellimala
+Idukki,Koovappally
+Idukki,Marykulam
+Idukki,Thovala
+Idukki,Karimkunnam
+Idukki,Kavumpuram
+Idukki,Vallakkadavu
+Idukki,Anchunadu
+Ernakulam,Aamballoor
+Ernakulam,Aikaranadu North
+Ernakulam,Aikaranadu South
+Ernakulam,Alangad
+Ernakulam,Aluva East
+Ernakulam,Aluva West
+Ernakulam,Angamaly Rural
+Ernakulam,Athani
+Ernakulam,Ayyampuzha
+Ernakulam,Chellanam
+Ernakulam,Chendamangalam
+Ernakulam,Chengamanad
+Ernakulam,Chottanikkara
+Ernakulam,Edappally Rural
+Ernakulam,Edathala
+Ernakulam,Ezhikkara
+Ernakulam,Kadungalloor
+Ernakulam,Kadamakudy
+Ernakulam,Kakkanad Rural
+Ernakulam,Kalamassery Rural
+Ernakulam,Kalloorkkad
+Ernakulam,Kanjoor
+Ernakulam,Karukutty
+Ernakulam,Kavalangad
+Ernakulam,Kizhakkambalam
+Ernakulam,Kizhakkambalam North
+Ernakulam,Kizhakkambalam South
+Ernakulam,Kombanad
+Ernakulam,Kondotty East
+Ernakulam,Koovappady
+Ernakulam,Kothamangalam Rural
+Ernakulam,Kottappady
+Ernakulam,Kunnukara   ← ADDED ✔
+Ernakulam,Kunnathunad
+Ernakulam,Kuttampuzha
+Ernakulam,Madaplathuruth
+Ernakulam,Malayattoor
+Ernakulam,Manjappra
+Ernakulam,Maradu Rural
+Ernakulam,Mazhavanur
+Ernakulam,Meloor
+Ernakulam,Moothakunnam
+Ernakulam,Mulanthuruthy
+Ernakulam,Nayarambalam
+Ernakulam,Nettoor Rural
+Ernakulam,Njarakkal
+Ernakulam,North Paravur   
+Ernakulam,Okkal
+Ernakulam,Palakkuzha
+Ernakulam,Pallarimangalam
+Ernakulam,Pampram
+Ernakulam,Parakkadavu
+Ernakulam,Parappuram
+Ernakulam,Paravur Rural   
+Ernakulam,Paipra
+Ernakulam,Pindimana
+Ernakulam,Perumbavoor East
+Ernakulam,Perumbavoor West
+Ernakulam,Puthenvelikkara
+Ernakulam,Rayamangalam
+Ernakulam,Ramamangalam
+Ernakulam,South Vazhakulam
+Ernakulam,Thirumarady
+Ernakulam,Thiruvaniyoor
+Ernakulam,Thuruthiply
+Ernakulam,Udayamperoor
+Ernakulam,Varapuzha
+Ernakulam,Vazhakulam
+Ernakulam,Velloorkunnam
+Ernakulam,Vengola
+Ernakulam,Vengoor East
+Ernakulam,Vengoor West
+Ernakulam,Vadavucode
+Ernakulam,Vadavucode-Puthencruz
+Ernakulam,Edavanakkad
+Thrissur,Adat
+Thrissur,Amballur
+Thrissur,Ambazhakad
+Thrissur,Anchery
+Thrissur,Aloor
+Thrissur,Anthikad
+Thrissur,Avanur
+Thrissur,Chalakudy East
+Thrissur,Chalakudy West
+Thrissur,Chazhoor
+Thrissur,Cherpu
+Thrissur,Cherthala Rural
+Thrissur,Chelakkara
+Thrissur,Chengaloor
+Thrissur,Cherayi Rural
+Thrissur,Choondal
+Thrissur,Desamangalam
+Thrissur,Erumapetty
+Thrissur,Ezhikkara East
+Thrissur,Edakkunni
+Thrissur,Engandiyur
+Thrissur,Eravu
+Thrissur,Erumapetty South
+Thrissur,Govindapuram
+Thrissur,Iringalakuda Rural
+Thrissur,Irinjalakuda Rural
+Thrissur,Kadukutty
+Thrissur,Kadappuram
+Thrissur,Kalamukku
+Thrissur,Kallurvadakkumuri
+Thrissur,Kandassankadavu
+Thrissur,Karalam
+Thrissur,Kattoor
+Thrissur,Kattoor South
+Thrissur,Koratty
+Thrissur,Kozhukully
+Thrissur,Kunnamkulam Rural
+Thrissur,Kuruvilassery
+Thrissur,Kurumassery
+Thrissur,Kuruvilangad
+Thrissur,Kuttur
+Thrissur,Manaloor
+Thrissur,Mamalla
+Thrissur,Mannampetta
+Thrissur,Mathilakam
+Thrissur,Mattathur
+Thrissur,Meloor West
+Thrissur,Methala
+Thrissur,Moonnupeedika
+Thrissur,Mulakunnathukavu
+Thrissur,Mundathikode
+Thrissur,Mundur
+Thrissur,Muriyad
+Thrissur,Nattika
+Thrissur,Nandikkara
+Thrissur,Nenmanikkara
+Thrissur,Oorakam
+Thrissur,Padiyoor
+Thrissur,Pallikkara
+Thrissur,Pallissery
+Thrissur,Pamburuthy
+Thrissur,Parappukkara
+Thrissur,Pariyaram
+Thrissur,Pazhaya Lakkidi
+Thrissur,Pazhayannur
+Thrissur,Poomangalam
+Thrissur,Porkulam
+Thrissur,Porathissery
+Thrissur,Puzyapalli
+Thrissur,Puthenchira
+Thrissur,Ramavarmapuram
+Thrissur,Sreenarayanapuram
+Thrissur,Thanniyam
+Thrissur,Tholur
+Thrissur,Thottippal
+Thrissur,Thrichattukulam
+Thrissur,Thrichur Rural
+Thrissur,Triprayar
+Thrissur,Vadakkekad
+Thrissur,Vadama
+Thrissur,Vadookkara
+Thrissur,Vallachira
+Thrissur,Vallapuzha
+Thrissur,Varandarappilly
+Thrissur,Vazhakkulam
+Thrissur,Vellangallur
+Thrissur,Velur
+Thrissur,Venkitangu
+Palakkad,Agali
+Palakkad,Akathethara
+Palakkad,Alanallur
+Palakkad,Ambalapara
+Palakkad,Anakkara
+Palakkad,Attapadi
+Palakkad,Bhimanad
+Palakkad,Chalissery
+Palakkad,Chandranagar
+Palakkad,Chandrapuram
+Palakkad,Chathamangalam
+Palakkad,Chittur
+Palakkad,Chittur-Thathamangalam
+Palakkad,Chittilamcherry
+Palakkad,Erimayur
+Palakkad,Elappully
+Palakkad,Elambulassery
+Palakkad,Eruthempathy
+Palakkad,Epiyakavu
+Palakkad,Kadampazhipuram
+Palakkad,Kalladikode
+Palakkad,Kallara
+Palakkad,Kanhiran
+Palakkad,Kannanur
+Palakkad,Kanjirampuzha
+Palakkad,Karakurussi
+Palakkad,Karimpuzha
+Palakkad,Kattukulam
+Palakkad,Kavassery
+Palakkad,Keralassery
+Palakkad,Kizhakkencheri
+Palakkad,Kodumbu
+Palakkad,Kollengode
+Palakkad,Kongad
+Palakkad,Kottekkad
+Palakkad,Kozhinjampara
+Palakkad,Kozhipathy
+Palakkad,Kuzhalmannam
+Palakkad,Kuzhalmannam East
+Palakkad,Kuzhalmannam West
+Palakkad,Mannarkkad
+Palakkad,Malampuzha
+Palakkad,Mathur
+Palakkad,Meenakshipuram
+Palakkad,Melarcode
+Palakkad,Mundur
+Palakkad,Mankara
+Palakkad,Nagalassery
+Palakkad,Nallepilly
+Palakkad,Nattukal
+Palakkad,Nenmara
+Palakkad,Ottapalam
+Palakkad,Pallassena
+Palakkad,Pallanchathanur
+Palakkad,Pattambi
+Palakkad,Pookkottukavu
+Palakkad,Perumatti
+Palakkad,Peruvemba
+Palakkad,Pirayiri
+Palakkad,Puduppariyaram
+Palakkad,Puthussery Central
+Palakkad,Puthussery West
+Palakkad,Sholayur
+Palakkad,Sreekrishnapuram
+Palakkad,Thenur
+Palakkad,Thirunellayi
+Palakkad,Thiruvazhiyad
+Palakkad,Thachampara
+Palakkad,Thrikkadiri
+Palakkad,Thiruvegappura
+Palakkad,Thirumittacode
+Palakkad,Thuruthy
+Palakkad,Trithala
+Palakkad,Vadakarapathy
+Palakkad,Vadakkancheri
+Palakkad,Vadakkenchery South
+Palakkad,Vadakkenchery North
+Palakkad,Vallapuzha
+Palakkad,Vandazhi
+Palakkad,Vaniamkulam
+Palakkad,Vattambalam
+Palakkad,Vazhakode
+Palakkad,Vellinezhi
+Palakkad,Veluthur
+Palakkad,Vengasseri
+Palakkad,Vettathur
+Palakkad,Walayar
+Malappuram,Alamkod
+Malappuram,Alipparamba
+Malappuram,Amayur
+Malappuram,Anakkayam
+Malappuram,Areacode
+Malappuram,Arimbra
+Malappuram,Athavanad
+Malappuram,Cheekode
+Malappuram,Chaliyar
+Malappuram,Chalavara
+Malappuram,Chancheri
+Malappuram,Chattiparamba
+Malappuram,Cherukavu
+Malappuram,Cherumukku
+Malappuram,Chembrassery
+Malappuram,Cheriyamundam
+Malappuram,Edayur
+Malappuram,Edappal
+Malappuram,Edarikode
+Malappuram,Edavanna
+Malappuram,Elamkulam
+Malappuram,Elamkodu
+Malappuram,Ernad
+Malappuram,Irimbiliyam
+Malappuram,Kalikavu
+Malappuram,Kakkadampoyil
+Malappuram,Karakunnu
+Malappuram,Kadampuzha
+Malappuram,Kadampuzha North
+Malappuram,Kadungalloor East
+Malappuram,Kaladi
+Malappuram,Kalikavu West
+Malappuram,Kamalhaji
+Malappuram,Kanippayyoor
+Malappuram,Kanjiramkulam
+Malappuram,Koottilangadi
+Malappuram,Kondotty
+Malappuram,Koottilangadi West
+Malappuram,Kotta
+Malappuram,Kumaramputhur
+Malappuram,Kuruva
+Malappuram,Kuruva South
+Malappuram,Kuttippuram
+Malappuram,Kuttippuram South
+Malappuram,Kuttippala
+Malappuram,Kuruva North
+Malappuram,Manjeri
+Malappuram,Manjeri Municipality Rural
+Malappuram,Maranchery
+Malappuram,Melattur
+Malappuram,Mampad
+Malappuram,Mankada
+Malappuram,Mangalam
+Malappuram,Moorkkanad
+Malappuram,Moonniyur
+Malappuram,Moothedam
+Malappuram,Muttanampuram
+Malappuram,Naduvattam
+Malappuram,Nannambra
+Malappuram,Nilambur
+Malappuram,Othukkungal
+Malappuram,Painkannur
+Malappuram,Pandikkad
+Malappuram,Pallikkal
+Malappuram,Parappur
+Malappuram,Perinthalmanna
+Malappuram,Perumbadappu
+Malappuram,Peruvallur
+Malappuram,Ponniakurussi
+Malappuram,Pookkottur
+Malappuram,Purathur
+Malappuram,Puthanathani
+Malappuram,Puthur
+Malappuram,Ramanattukara Rural
+Malappuram,Thennala
+Malappuram,Thirurangadi
+Malappuram,Thuvvur
+Malappuram,Thiruvali
+Malappuram,Thuvakkad
+Malappuram,Thennala East
+Malappuram,Thennala West
+Malappuram,Thazhecode
+Malappuram,Tirur
+Malappuram,Tirurangadi
+Malappuram,Tuvvur
+Malappuram,Urangattiri
+Malappuram,Valanchery
+Malappuram,Valavannur
+Malappuram,Veliyamcode
+Malappuram,Vengara
+Malappuram,Vettathur
+Malappuram,Vettom
+Kozhikode,Arikkulam
+Kozhikode,Azhiyur
+Kozhikode,Balussery
+Kozhikode,Chelannur
+Kozhikode,Chelambra
+Kozhikode,Chelavoor
+Kozhikode,Chelannur South
+Kozhikode,Cheruvannur
+Kozhikode,Chorode
+Kozhikode,Enghapuzha
+Kozhikode,Eramala
+Kozhikode,Eranhikkal
+Kozhikode,Kadalundi
+Kozhikode,Kakkodi
+Kozhikode,Kakkur
+Kozhikode,Kallachi
+Kozhikode,Kalluratt
+Kozhikode,Kattippara
+Kozhikode,Keezhariyur
+Kozhikode,Keezhilamcode
+Kozhikode,Kizhakkoth
+Kozhikode,Kodancherry
+Kozhikode,Kodiyathur
+Kozhikode,Koorachundu
+Kozhikode,Korom
+Kozhikode,Kottur
+Kozhikode,Koyilandi Rural
+Kozhikode,Kunnamangalam
+Kozhikode,Kunnummal
+Kozhikode,Kuttikkattoor
+Kozhikode,Kuniyil
+Kozhikode,Madavoor
+Kozhikode,Madathara
+Kozhikode,Madayikkara
+Kozhikode,Mavoor
+Kozhikode,Maruthonkara
+Kozhikode,Maranchery
+Kozhikode,Melday
+Kozhikode,Moozhikkal
+Kozhikode,Munderi
+Kozhikode,Nadapuram
+Kozhikode,Nanmanda
+Kozhikode,Narikkuni
+Kozhikode,Narippatta
+Kozhikode,Onchiyam
+Kozhikode,Payyoli Rural
+Kozhikode,Perambra
+Kozhikode,Peruvayal
+Kozhikode,Poonoor
+Kozhikode,Poonoor South
+Kozhikode,Puthuppadi
+Kozhikode,Ramanattukara Rural
+Kozhikode,Thalakulathur
+Kozhikode,Thamarassery
+Kozhikode,Thiruvangoor
+Kozhikode,Thikkodi
+Kozhikode,Thiruvallur
+Kozhikode,Thurayur
+Kozhikode,Unnikulam
+Kozhikode,Vadakara Rural
+Kozhikode,Vanimel
+Kozhikode,Vellarakkad
+Kozhikode,Vatakara East
+Kozhikode,Vatakara West
+Kozhikode,Vellamunda
+Kozhikode,Vengeri
+Kozhikode,Villiappally
+Wayanad,Ambalavayal
+Wayanad,Edavaka
+Wayanad,Kalpetta Rural
+Wayanad,Kaniyambetta
+Wayanad,Kottathara
+Wayanad,Meenangadi
+Wayanad,Mullankolli
+Wayanad,Muppainad
+Wayanad,Nenmeni
+Wayanad,Noolpuzha
+Wayanad,Padinjarathara
+Wayanad,Pallikkunnu
+Wayanad,Panamaram
+Wayanad,Poothadi
+Wayanad,Pulpally
+Wayanad,Thariyode
+Wayanad,Thondernad
+Wayanad,Thrikkaipetta
+Wayanad,Vengappally
+Wayanad,Vellamunda
+Wayanad,Velliyamkunnu
+Wayanad,Vyithiri
+Wayanad,Mananthavady Rural
+Kannur,Alakode
+Kannur,Aralam
+Kannur,Ayyankunnu
+Kannur,Chapparapadavu
+Kannur,Chengalai
+Kannur,Chirakkal
+Kannur,Chittariparamba
+Kannur,Chokli
+Kannur,Edakkad
+Kannur,Eranholi
+Kannur,Eranhivila
+Kannur,Iritty
+Kannur,Irikkur
+Kannur,Kadamboor
+Kannur,Kadirur
+Kannur,Kadachira
+Kannur,Kakkayangad
+Kannur,Kalliasseri
+Kannur,Kankol-Alapadamba
+Kannur,Karikkottakary
+Kannur,Karivellur-Peralam
+Kannur,Karivellur
+Kannur,Keezhallur
+Kannur,Kizhakke Kallada
+Kannur,Kizhakkanam
+Kannur,Kodiyeri
+Kannur,Kodiyeri Coastal
+Kannur,Kokkanissery
+Kannur,Kolachery
+Kannur,Kottayam Malabar
+Kannur,Kunnothuparamba
+Kannur,Kuttiattoor
+Kannur,Kurumbram
+Kannur,Kurumathur
+Kannur,Kurumathur South
+Kannur,Madavoor
+Kannur,Malapattam
+Kannur,Malur
+Kannur,Mananthana
+Kannur,Manikkadavu
+Kannur,Mattool
+Kannur,Mayyil
+Kannur,Mokeri
+Kannur,Munderi
+Kannur,Munderi South
+Kannur,Munderi West
+Kannur,Muzhappilangad
+Kannur,Naduvil
+Kannur,Narath
+Kannur,Nediyanga
+Kannur,Paduvilayi
+Kannur,Padiyur
+Kannur,Palayad
+Kannur,Pallikkunnu
+Kannur,Panniyannur
+Kannur,Pappinisseri
+Kannur,Payyavoor
+Kannur,Payyanur Rural
+Kannur,Peralassery
+Kannur,Peringome
+Kannur,Pinarayi
+Kannur,Pulippara
+Kannur,Sreekandapuram Rural
+Kannur,Thalassery Rural
+Kannur,Thaliparamba Rural
+Kannur,Thillenkeri
+Kannur,Thirumeni
+Kannur,Thirupuram
+Kannur,Thottada
+Kannur,Valapattanam
+Kannur,Varam
+Kannur,Vayakkara
+Kannur,Vellarvelli
+Kannur,Vengad
+Kannur,Vilakkannur
+Kannur,Vimalagiri
+Kannur,Vismaya
+Kasaragod,Adhur
+Kasaragod,Badiadka
+Kasaragod,Bedadka
+Kasaragod,Bela
+Kasaragod,Chengala
+Kasaragod,Cheruvathur
+Kasaragod,Delampady
+Kasaragod,Edneer
+Kasaragod,Enmakaje
+Kasaragod,Kadaba
+Kasaragod,Kallar
+Kasaragod,Kanhangad Rural
+Kasaragod,Kasaragod Rural
+Kasaragod,Kodom-Belur
+Kasaragod,Kodoth
+Kasaragod,Kudlu
+Kasaragod,Kumbla
+Kasaragod,Kunjathur
+Kasaragod,Karadka
+Kasaragod,Madhur
+Kasaragod,Mangalpady
+Kasaragod,Manjeshwaram
+Kasaragod,Meenja
+Kasaragod,Mogral Puthur
+Kasaragod,Muliyar
+Kasaragod,Nileshwaram Rural
+Kasaragod,Padanna
+Kasaragod,Padne
+Kasaragod,Parappa
+Kasaragod,Pavoor
+Kasaragod,Periya
+Kasaragod,Pullur-Periya
+Kasaragod,Puthige
+Kasaragod,Thayannur
+Kasaragod,Trikaripur
+Kasaragod,Udma
+Kasaragod,Vellarikkundu
+Kasaragod,Vorkady
+Kasaragod,Wardhannur

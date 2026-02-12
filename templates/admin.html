@@ -1,92 +1,119 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard – QUEUELESS</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <!-- Auto refresh every 5 seconds -->
-    <script>
-        setInterval(function () {
-            window.location.reload();
-        }, 5000);
-    </script>
 </head>
 <body>
 
-<!-- ================= TOP HEADER ================= -->
+<!-- TOP BAR -->
 <div class="topbar">
     <div class="brand">
-        QUEUELESS
-        <span>Admin Dashboard</span>
+        ADMIN – QUEUELESS
+        <span>Digital Queue Management System</span>
     </div>
 </div>
 
-<!-- ================= MAIN CONTENT ================= -->
-<div class="content">
-    <div class="left-panel">
-        <h2>Current Tokens</h2>
+<!-- PAGE WRAPPER -->
+<div class="admin-wrapper">
 
-        {% if tokens %}
-        <table border="1" width="100%" cellpadding="8" cellspacing="0">
-            <tr>
-                <th>Token</th>
-                <th>Counter</th>
-                <th>Name</th>
-                <th>District</th>
-                <th>Panchayat</th>
-                <th>Ward</th>
-                <th>Purpose</th>
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
+    <!-- ADMIN CARD -->
+    <div class="admin-card">
+        <h2>Token Management</h2>
 
-            {% for t in tokens %}
-            <tr>
-                <td>{{ t.token_number }}</td>
-                <td>{{ t.counter_number }}</td>
-                <td>{{ t.name }}</td>
-                <td>{{ t.district }}</td>
-                <td>{{ t.panchayat }}</td>
-                <td>{{ t.ward }}</td>
-                <td>{{ t.purpose }}</td>
-                <td>{{ t.status }}</td>
-                <td>
-    {% if t.status == "Waiting" %}
-        <button onclick="serveToken({{ t.token_number }})">Serve</button>
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Token No</th>
+                        <th>Counter</th>
+                        <th>Name</th>
+                        <th>District</th>
+                        <th>Panchayat</th>
+                        <th>Ward</th>
+                        <th>Purpose</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
 
-    {% elif t.status == "Serving" %}
-        <button onclick="doneToken({{ t.token_number }})">Done</button>
+                <tbody id="tokenTableBody">
+                {% for row in tokens %}
+                    <tr>
+                        <td>{{ row.token_number }}</td>
+                        <td>{{ row.counter_number }}</td>
+                        <td>{{ row.name }}</td>
+                        <td>{{ row.district }}</td>
+                        <td>{{ row.panchayat }}</td>
+                        <td>{{ row.ward }}</td>
+                        <td>{{ row.purpose }}</td>
+                        <td>{{ row.status }}</td>
 
-    {% else %}
-        <b>Completed</b>
-    {% endif %}
-</td>
+                        <td>
 
-            </tr>
-            {% endfor %}
-        </table>
-        {% else %}
-            <p>No tokens generated yet.</p>
-        {% endif %}
+                            <!-- SERVE -->
+                            {% if row.status != 'Serving' and row.status != 'Done' and row.status != 'Cancelled' %}
+                                <button class="serve-btn" onclick="serveToken({{ row.token_number }})">Serve</button>
+                            {% endif %}
+
+                            <!-- DELETE (only if Done) -->
+                            {% if row.status == 'Done' %}
+                                <button class="done-btn" style="background:#dc3545;" onclick="deleteToken({{ row.token_number }})">Delete</button>
+                            {% endif %}
+
+                            <!-- CANCEL (until Done) -->
+                            {% if row.status != 'Done' and row.status != 'Cancelled' %}
+                                <button class="done-btn" style="background:#6c757d;" onclick="cancelToken({{ row.token_number }})">Cancel</button>
+                            {% endif %}
+
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
     </div>
 </div>
 
-<!-- ================= SCRIPT ================= -->
+<!-- JS -->
 <script>
+
 function serveToken(tokenNo) {
     fetch("/serve_token/" + tokenNo)
-        .then(() => window.location.reload());
+        .then(() => refreshTable());
 }
-</script>
-<script>
+
 function doneToken(tokenNo) {
     fetch("/done_token/" + tokenNo)
-        .then(() => {
-            window.location.reload();
+        .then(() => refreshTable());
+}
+
+function cancelToken(tokenNo) {
+    fetch("/cancel_token/" + tokenNo)
+        .then(() => refreshTable());
+}
+
+/* 🔥 FIXED HERE */
+function deleteToken(tokenNo) {
+    fetch("/done_token/" + tokenNo)
+        .then(() => refreshTable());
+}
+
+function refreshTable() {
+    fetch("/admin/table_reload")
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById("tokenTableBody").innerHTML = html;
         });
 }
+
+setInterval(refreshTable, 3000);
+
 </script>
 
 </body>
 </html>
+
+

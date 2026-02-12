@@ -1,104 +1,264 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>User Dashboard</title>
+    <title>User Dashboard – QUEUELESS</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        /* POPUP MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background: white;
+            width: 350px;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            animation: popup 0.3s ease;
+        }
+
+        @keyframes popup {
+            from {transform: scale(0.7); opacity: 0;}
+            to {transform: scale(1); opacity: 1;}
+        }
+
+        .closeBtn {
+            float: right;
+            cursor: pointer;
+            font-size: 30px;
+            margin-top: -10px;
+        }
+
+        .tokenNumber, .counterNumber {
+            font-weight: bold;
+            font-size: 26px;
+        }
+        .modal-est {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- ================= TOP HEADER ================= -->
+<!-- TOP BAR -->
 <div class="topbar">
-    <div class="brand">
-        QUEUELESS
+    <div class="brand">QUEUELESS
         <span>Digital Queue Management System</span>
     </div>
 </div>
 
-<!-- ================= SIDEBAR ================= -->
-<div class="sidebar">
-    <a href="/">Home</a>
-    <a href="#">Live Status</a>
-    <a href="#">Services</a>
-    <a href="#">Help</a>
+<!-- PAGE LAYOUT -->
+<div class="page-wrapper">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+    <a href="/user">Home</a>
+    <a href="/user/status">Live Status</a>
+    <a href="/user/services">Services</a>
+    <a href="/user/help">Help</a>
 </div>
 
-<!-- ================= MAIN CONTENT ================= -->
-<div class="content">
 
-    <!-- ===== LEFT PANEL : TOKEN GENERATION ===== -->
-    <div class="left-panel">
+    <!-- MAIN CONTENT LEFT -->
+    <div class="left-card">
         <h2>Generate Token</h2>
 
-        <!-- Name -->
-        <input type="text" id="name" placeholder="First Name" required>
+        <input type="text" id="name" placeholder="Full Name">
 
-        <!-- District -->
-        <select id="district" onchange="loadPanchayats()" required>
-            <option value="">Select District</option>
-            <option>Thiruvananthapuram</option>
-            <option>Kollam</option>
-            <option>Pathanamthitta</option>
-            <option>Alappuzha</option>
-            <option>Kottayam</option>
-            <option>Idukki</option>
-            <option>Ernakulam</option>
-            <option>Thrissur</option>
-            <option>Palakkad</option>
-            <option>Malappuram</option>
-            <option>Kozhikode</option>
-            <option>Wayanad</option>
-            <option>Kannur</option>
-            <option>Kasaragod</option>
+        <select id="district" onchange="loadPanchayats()">
+           <option value="">Select District</option>
+           {% for d in districts %}
+                 <option value="{{ d['district_name'] }}">{{ d['district_name'] }}</option>
+           {% endfor %}
+         </select>
+
+         <select id="panchayat" onchange="loadWards()">
+                 <option value="">Select Panchayat</option>
+         </select>
+
+
+        <select id="ward">
+                <option value="">Select Ward</option>
         </select>
+        
+        <select id="purpose">
+    <option value="">Select Purpose</option>
 
-        <!-- Panchayat -->
-        <select id="panchayat" onchange="loadWards()" required>
-            <option value="">Select Panchayat</option>
-        </select>
+    <option>Birth Certificate</option>
+    <option>Death Certificate</option>
+    <option>Marriage Certificate</option>
+    <option>Caste Certificate</option>
+    <option>Income Certificate</option>
+    <option>Residence Certificate</option>
+    <option>Property Tax Payment</option>
+    <option>Building Tax</option>
+    <option>Building Permit</option>
+    <option>Trade License</option>
+    <option>Renewal of Trade License</option>
+    <option>Water Connection</option>
+    <option>Electricity Complaint</option>
+    <option>Sanitation Complaint</option>
+    <option>Street Light Complaint</option>
+    <option>Waste Management Service</option>
+    <option>Welfare Pension Application</option>
+    <option>Widow Pension</option>
+    <option>Old Age Pension</option>
+    <option>Disability Pension</option>
+    <option>Scholarship Certificate</option>
+    <option>Land Ownership Certificate</option>
+    <option>Building Completion Certificate</option>
+    <option>Non-Availability Certificate</option>
+    <option>Other Services</option>
 
-        <!-- Ward -->
-        <select id="ward" required>
-            <option value="">Select Ward Number</option>
-        </select>
+</select>
 
-        <!-- Purpose -->
-        <select id="purpose" required>
-            <option value="">Select Purpose</option>
-            <option>Birth Certificate</option>
-            <option>Death Certificate</option>
-            <option>Income Certificate</option>
-            <option>Caste Certificate</option>
-            <option>Residence Certificate</option>
-            <option>Marriage Registration</option>
-            <option>Pension Services</option>
-            <option>Property Tax</option>
-            <option>Complaints</option>
-        </select>
 
-        <button onclick="sendTokenData()">Generate Token</button>
-    </div>
-
-    <!-- ===== RIGHT PANEL : LIVE STATUS ===== -->
-    <div class="right-panel">
-        <h2>Live Counter Status</h2>
-
-        <div class="status-box">
-            <p>Current Token</p>
-            <h1 id="liveToken">--</h1>
-        </div>
-
-        <div class="status-box">
-            <p>Current Counter</p>
-            <h1 id="liveCounter">--</h1>
-        </div>
+        <button onclick="generateUserToken()">Generate Token</button>
     </div>
 
 </div>
 
-<!-- ================= SCRIPT ================= -->
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+<!-- TOKEN POPUP MODAL -->
+<div id="tokenModal" class="modal">
+    <div class="modal-content">
+        <span class="closeBtn" onclick="closeModal()">&times;</span>
+
+        <h2>Your Token is Generated!</h2>
+
+        <p class="modal-text">Token Number:
+            <span id="modalToken" class="tokenNumber">--</span>
+        </p>
+
+        <p class="modal-text">Counter Number:
+            <span id="modalCounter" class="counterNumber">--</span>
+        </p>
+
+        <p id="modalEstTime" class="modal-est">Estimated Time: -- minutes</p>
+    </div>
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script>
+
+function generateUserToken() {
+
+    let data = {
+        name: document.getElementById("name").value,
+        district: document.getElementById("district").value,
+        panchayat: document.getElementById("panchayat").value,
+        ward: document.getElementById("ward").value,
+        purpose: document.getElementById("purpose").value
+    };
+
+    // VALIDATION
+    if (!data.name || !data.district ||
+    !data.panchayat ||
+    !data.ward ||
+    !data.purpose) {
+
+
+        alert("Please fill all fields before generating token!");
+        return;
+    }
+
+    fetch("/generate_token", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(result => {
+        
+        // SHOW VALUES IN POPUP
+        document.getElementById("modalToken").innerText = result.token;
+        document.getElementById("modalCounter").innerText = result.counter;
+
+        let diff = result.token - result.counter;
+        let est = diff * 2;  // 2 minutes per token
+        document.getElementById("modalEstTime").innerText =
+            "Estimated Time: " + est + " minutes";
+
+        // COLOR CODING
+        let color = "green";
+        if (diff > 10 && diff <= 30) color = "orange";
+        if (diff > 30) color = "red";
+
+        document.getElementById("modalToken").style.color = color;
+
+        // SHOW POPUP
+        openModal();
+    })
+    .catch(err => console.log(err));
+}
+// ---------------- LOAD PANCHAYATS ----------------
+function loadPanchayats() {
+
+    let district = document.getElementById("district").value;
+
+    fetch("/get_panchayats/" + district)
+    .then(res => res.json())
+    .then(data => {
+
+        let p = document.getElementById("panchayat");
+        p.innerHTML = '<option value="">Select Panchayat</option>';
+
+        data.forEach(function(item) {
+            p.innerHTML += '<option value="' + item + '">' + item + '</option>';
+        });
+
+        // Reset wards
+        document.getElementById("ward").innerHTML =
+            '<option value="">Select Ward</option>';
+    })
+    .catch(err => console.log(err));
+}
+
+
+// ---------------- LOAD WARDS ----------------
+function loadWards() {
+
+    let panchayat = document.getElementById("panchayat").value;
+
+    fetch("/get_wards/" + panchayat)
+    .then(res => res.json())
+    .then(data => {
+
+        let w = document.getElementById("ward");
+        w.innerHTML = '<option value="">Select Ward</option>';
+
+        data.forEach(function(item) {
+            w.innerHTML += '<option value="' + item + '">' + item + '</option>';
+        });
+    })
+    .catch(err => console.log(err));
+}
+
+// OPEN POPUP
+function openModal() {
+    document.getElementById("tokenModal").style.display = "block";
+}
+
+// CLOSE POPUP
+function closeModal() {
+    document.getElementById("tokenModal").style.display = "none";
+}
+
+</script>
+
 </body>
 </html>
-
-

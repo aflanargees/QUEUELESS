@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Status – QUEUELESS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        .status-wrapper {
+            width: 500px;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            margin-top: 20px;
+        }
+
+        .status-box {
+            background: #eef2f3;
+            padding: 22px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 18px;
+        }
+
+        .status-box h1 {
+            font-size: 42px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div class="brand">QUEUELESS
+        <span>Digital Queue Management System</span>
+    </div>
+</div>
+
+<!-- PAGE LAYOUT -->
+<div class="page-wrapper">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <a href="/user">Home</a>
+        <a href="/user/status" class="active">Live Status</a>
+        <a href="/user/services">Services</a>
+        <a href="/user/help">Help</a>
+    </div>
+
+    <!-- MAIN CONTENT (One Single Card) -->
+    <div class="status-wrapper">
+        <h2 style="text-align:center;">Your Live Status</h2>
+
+        <!-- YOUR TOKEN -->
+        <div class="status-box">
+            <p>Your Token</p>
+            <h1 id="yourToken">{{ user_token if user_token else '--' }}</h1>
+        </div>
+
+        <!-- YOUR COUNTER -->
+        <div class="status-box">
+            <p>Your Counter</p>
+            <h1>{{ user_counter if user_counter else '--' }}</h1>
+
+        </div>
+
+        <!-- CURRENT SERVING -->
+        <div class="status-box">
+            <p>Current Token Serving</p>
+            <h1 id="currentServing">--</h1>
+        </div>
+
+        <!-- TOTAL WAITING -->
+            <div class="status-box">
+            <p>Total Waiting Tokens</p>
+            <h1 id="waitingCount">--</h1>
+         </div>
+
+    </div>
+
+</div>
+
+<script>
+<script>
+function updateLive() {
+
+    let myToken = {{ user_token | tojson }};
+    let myCounter = {{ user_counter | tojson }};
+    let myTokenBox = document.getElementById("yourToken");
+
+    fetch("/live_data")
+    .then(res => res.json())
+    .then(info => {
+
+        let servingList = info.serving_list || [];
+        let waiting = info.waiting_count || 0;
+
+        document.getElementById("currentServing").innerText = "--";
+        document.getElementById("waitingCount").innerText = waiting;
+
+        if (myToken && myCounter) {
+
+            let current = servingList.find(
+                item => item.counter == myCounter
+            );
+
+            if (current) {
+
+                document.getElementById("currentServing").innerText = current.token;
+
+                let diff = myToken - current.token;
+
+                if (diff <= 10) myTokenBox.style.color = "green";
+                else if (diff <= 30) myTokenBox.style.color = "orange";
+                else myTokenBox.style.color = "red";
+            }
+        }
+    });
+}
+
+setInterval(updateLive, 2000);
+updateLive();
+</script>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Services – QUEUELESS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .services-wrapper {
+            padding: 40px;
+        }
+
+        .services-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        /* Tablet view */
+@media (max-width: 900px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Mobile view */
+@media (max-width: 600px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+        .service-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-card h3 {
+            color: #1565c0;
+            margin-bottom: 8px;
+        }
+
+        .service-desc {
+            font-size: 14px;
+            margin-bottom: 12px;
+            color: #555;
+        }
+
+        .docs-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .service-card ul {
+            padding-left: 18px;
+            font-size: 14px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <div class="brand">QUEUELESS
+        <span>Digital Queue Management System</span>
+    </div>
+</div>
+
+<div class="page-wrapper">
+
+    <div class="sidebar">
+    <a href="/user">Home</a>
+    <a href="/user/status">Live Status</a>
+    <a href="/user/services">Services</a>
+    <a href="/user/help">Help</a>
+ </div>
+
+
+    <div class="services-wrapper">
+
+        <div class="services-title">Grama Panchayat Services</div>
+
+        <div class="services-grid">
+
+            <!-- Birth -->
+            <div class="service-card">
+                <h3>Birth Certificate</h3>
+                <div class="service-desc">
+                    Official record of a child's birth issued by the Panchayat.
+                </div>
+                <div class="docs-title">Documents Required:</div>
+                <ul>
+                    <li>Hospital Birth Record</li>
+                    <li>Parent Aadhaar Copies</li>
+                    <li>Application Form</li>
+                </ul>
+            </div>
+
+            <!-- Death -->
+            <div class="service-card">
+                <h3>Death Certificate</h3>
+                <div class="service-desc">
+                    Legal proof of death required for official purposes.
+                </div>
+                <div class="docs-title">Documents Required:</div>
+                <ul>
+                    <li>Hospital Death Record</li>
+                    <li>Applicant Aadhaar</li>
+                    <li>Application Form</li>
+                </ul>
+            </div>
+
+            <!-- Marriage -->
+            <div class="service-card">
+                <h3>Marriage Certificate</h3>
+                <div class="service-desc">
+                    Official registration of marriage under Panchayat records.
+                </div>
+                <div class="docs-title">Documents Required:</div>
+                <ul>
+                    <li>Marriage Proof</li>
+                    <li>Bride & Groom Aadhaar</li>
+                    <li>Passport Photos</li>
+                </ul>
+            </div>
+
+            <!-- Income -->
+            <div class="service-card">
+                <h3>Income Certificate</h3>
+                <div class="service-desc">
+                    Certificate showing annual income for scholarships and benefits.
+                </div>
+                <div class="docs-title">Documents Required:</div>
+                <ul>
+                    <li>Income Proof</li>
+                    <li>Aadhaar Card</li>
+                    <li>Ration Card Copy</li>
+                </ul>
+            </div>
+
+            <!-- Building Permit -->
+            <div class="service-card">
+                <h3>Building Permit</h3>
+                <div class="service-desc">
+                    Approval required before constructing or modifying buildings.
+                </div>
+                <div class="docs-title">Documents Required:</div>
+                <ul>
+                    <li>Building Plan</li>
+                    <li>Land Ownership Document</li>
+                    <li>Tax Receipt</li>
+                </ul>
+            </div>
+
+            <!-- Trade License -->
+            <div class="service-card">
+                <h3>Trade License</h3>
+                <div class="service-desc">
+                    Permission to legally operate business within Panchayat limits.
+                </div>
+                <div class="docs-title">Documents Required:</div>
+                <ul>
+                    <li>Business Registration Proof</li>
+                    <li>Owner Aadhaar</li>
+                    <li>Location Proof</li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+

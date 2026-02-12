@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>QUEUELESS</title>
+    <title>QUEUELESS – Welcome</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
+
 <body>
 
-<div class="container">
-    <h1>Welcome to <span>QUEUELESS</span></h1>
-    <p>
-        Digital Queue Management and Token Generation System<br>
-        for Panchayat Office
-    </p>
+<div class="welcome-wrapper">
+    <div class="welcome-card">
 
-    <div class="box">
-        <input type="tel" placeholder="Enter Phone Number">
+        <h1>Welcome to <span>QUEUELESS</span></h1>
+        <p>Digital Queue Management and Token Generation System<br>
+           for Panchayat Office</p>
 
-        <div class="captcha-box">
-            <span id="captcha">X7P9A</span>
-            <button type="button" class="captcha-refresh" onclick="refreshCaptcha()">⟳</button>
+        <!-- PHONE NUMBER -->
+        <input type="tel" id="phone" placeholder="Enter Phone Number" class="welcome-input">
+
+        <!-- CAPTCHA -->
+        <div class="captcha-row">
+            <div class="captcha-display" id="captcha">12345</div>
+            <button class="captcha-refresh" onclick="refreshCaptcha()">⟳</button>
         </div>
 
-        <input type="text" id="captchaInput" placeholder="Enter CAPTCHA">
+        <!-- CAPTCHA INPUT -->
+        <input type="text" id="captchaInput" placeholder="Enter Captcha" class="welcome-input">
 
-        <button onclick="validateCaptcha()">Generate OTP</button>
+        <!-- OTP BUTTON -->
+        <button class="otp-btn" onclick="validateCaptcha()">Generate OTP</button>
 
-        <input type="text" id="otp" placeholder="Enter OTP" style="display:none">
+        <!-- OTP INPUT -->
+        <input type="text" id="otp" placeholder="Enter OTP" class="welcome-input" style="display:none;">
 
-        <button id="verifyBtn" style="display:none" onclick="goToUser()">Verify OTP</button>
+        <!-- VERIFY OTP -->
+        <button id="verifyBtn" class="otp-btn" style="display:none;" onclick="goToUser()">Verify OTP</button>
+
     </div>
 </div>
 
 <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
-
-
-
-
-

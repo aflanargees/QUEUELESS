@@ -1,0 +1,36 @@
+{% for row in tokens %}
+<tr>
+    <td>{{ row.token_number }}</td>
+    <td>{{ row.counter_number }}</td>
+    <td>{{ row.name }}</td>
+    <td>{{ row.district }}</td>
+    <td>{{ row.panchayat }}</td>
+    <td>{{ row.ward }}</td>
+    <td>{{ row.purpose }}</td>
+    <td>{{ row.status }}</td>
+
+    <td>
+
+        <!-- WAITING: Serve + Cancel -->
+        {% if row.status == 'Waiting' %}
+            <button class="serve-btn" onclick="serveToken({{ row.token_number }})">Serve</button>
+            <button class="done-btn" style="background:#6c757d;" onclick="cancelToken({{ row.token_number }})">Cancel</button>
+        {% endif %}
+
+        <!-- SERVING: Done only -->
+        {% if row.status == 'Serving' %}
+            <button class="done-btn" onclick="doneToken({{ row.token_number }})">Done</button>
+        {% endif %}
+
+        <!-- DONE: Delete only -->
+        {% if row.status == 'Done' %}
+            <button class="done-btn" style="background:#dc3545;" onclick="deleteToken({{ row.token_number }})">Delete</button>
+        {% endif %}
+
+    </td>
+</tr>
+{% endfor %}
+
+
+
+

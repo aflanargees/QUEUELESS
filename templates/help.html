@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Help – QUEUELESS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+
+        .help-header {
+            background: rgba(0,0,0,0.6);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .help-container {
+            padding: 60px;
+        }
+
+        .help-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .help-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: 0.3s;
+        }
+
+        .help-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .help-icon {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .help-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .help-info {
+            font-size: 18px;
+            color: #1565c0;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="topbar">
+    <div class="brand">QUEUELESS
+        <span>Digital Queue Management System</span>
+    </div>
+</div>
+
+<div class="page-wrapper">
+
+    <div class="sidebar">
+        <a href="/user">Home</a>
+        <a href="/user/status">Live Status</a>
+        <a href="/user/services">Services</a>
+        <a href="/user/help">Help</a>
+    </div>
+
+    <div class="main-content:>
+        <div class="help-wrapper">
+
+
+        <div class="help-header">
+            Get In Touch
+        </div>
+
+        <div class="help-container">
+
+            <div class="help-grid">
+
+                <div class="help-card">
+                    <div class="help-icon">📞</div>
+                    <div class="help-title">Call Us</div>
+                    <div class="help-info">+91 9995286790</div>
+                </div>
+
+                <div class="help-card">
+                    <div class="help-icon">✉️</div>
+                    <div class="help-title">Email Us</div>
+                    <div class="help-info">queuelesshelpdesk@gmail.com</div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
