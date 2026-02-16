@@ -62,10 +62,19 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+def seed_data_if_empty():
+    conn = get_db()
+    count = conn.execute("SELECT COUNT(*) FROM districts").fetchone()[0]
 
+    if count == 0:
+        print("Seeding master data...")
+        import import_data  # this runs your import script
+
+    conn.close()
 
 create_master_tables()
 init_db()
+seed_data_if_empty()
 
 
 # -------------------- ROUTES --------------------
@@ -78,14 +87,16 @@ def welcome():
 def user():
     conn = get_db()
     districts = conn.execute(
-        "SELECT district_name FROM districts ORDER BY district_name"
+        "SELECT id, district_name FROM districts ORDER BY district_name"
     ).fetchall()
     conn.close()
     return render_template("user.html", districts=districts)
 
 
+
 # -------------------- GET PANCHAYATS --------------------
-@app.route("/get_panchayats/<district>")
+# -------------------- GET PANCHAYATS --------------------
+@app.route("/get_panchayats/<path:district>")
 def get_panchayats(district):
     conn = get_db()
     rows = conn.execute("""
@@ -100,7 +111,7 @@ def get_panchayats(district):
 
 
 # -------------------- GET WARDS --------------------
-@app.route("/get_wards/<panchayat>")
+@app.route("/get_wards/<path:panchayat>")
 def get_wards(panchayat):
     conn = get_db()
     rows = conn.execute("""

@@ -78,12 +78,15 @@
 
         <input type="text" id="name" placeholder="Full Name">
 
-        <select id="district" onchange="loadPanchayats()">
+        <select id="district" name="district" onchange="loadPanchayats()">
            <option value="">Select District</option>
-           {% for d in districts %}
-                 <option value="{{ d['district_name'] }}">{{ d['district_name'] }}</option>
-           {% endfor %}
-         </select>
+            {% for district in districts %}
+                <option value="{{ district['district_name'] }}">
+                    {{ district['district_name'] }}
+                </option>
+             {% endfor %}    
+        </select>
+
 
          <select id="panchayat" onchange="loadWards()">
                  <option value="">Select Panchayat</option>
@@ -124,7 +127,6 @@
     <option>Other Services</option>
 
 </select>
-
 
         <button onclick="generateUserToken()">Generate Token</button>
     </div>
@@ -210,7 +212,7 @@ function loadPanchayats() {
 
     let district = document.getElementById("district").value;
 
-    fetch("/get_panchayats/" + district)
+    fetch("/get_panchayats/" + encodeURIComponent(district))
     .then(res => res.json())
     .then(data => {
 
@@ -234,7 +236,7 @@ function loadWards() {
 
     let panchayat = document.getElementById("panchayat").value;
 
-    fetch("/get_wards/" + panchayat)
+    fetch("/get_wards/" + encodeURIComponent(panchayat))
     .then(res => res.json())
     .then(data => {
 
