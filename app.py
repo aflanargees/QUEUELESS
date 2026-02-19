@@ -1,5 +1,5 @@
-from flask import Flask, render_template, request, jsonify, session
-import sqlite3
+from flask import Flask, render_template, request, jsonify, session,redirect
+import sqlite3,random
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -85,12 +85,56 @@ def welcome():
 
 @app.route("/user")
 def user():
+
+    if not session.get("logged_in"):
+        return redirect("/")
+
     conn = get_db()
     districts = conn.execute(
         "SELECT id, district_name FROM districts ORDER BY district_name"
     ).fetchall()
     conn.close()
+
     return render_template("user.html", districts=districts)
+
+@app.route("/send_otp", methods=["POST"])
+def send_otp():
+
+    data = request.json
+    phone = data["phone"]
+
+    otp = str(random.randint(1000, 9999))
+
+    session["login_phone"] = phone
+    session["login_otp"] = otp
+
+    print("Demo OTP:", otp)  # check terminal
+
+    return jsonify({
+    "status": "sent",
+    "otp": otp
+})
+
+
+
+@app.route("/verify_login_otp", methods=["POST"])
+def verify_login_otp():
+    data = request.json
+    user_otp = data["otp"]
+
+    print("Entered OTP:", user_otp)
+    print("Session OTP:", session.get("login_otp"))
+
+    if "login_otp" in session and user_otp == session["login_otp"]:
+        session["logged_in"] = True
+        session.pop("login_otp", None)
+
+        print("Login Success ✅")
+        return jsonify({"status": "success"})
+
+    print("Login Failed ❌")
+    return jsonify({"status": "failed"})
+
 
 
 
@@ -186,10 +230,16 @@ def generate_token():
 # -------------------- ADMIN --------------------
 @app.route("/admin")
 def admin():
+
+    if not session.get("logged_in"):
+        return redirect("/")
+
     conn = get_db()
     rows = conn.execute("SELECT * FROM tokens ORDER BY id DESC").fetchall()
     conn.close()
+
     return render_template("admin.html", tokens=rows)
+
 
 @app.route("/admin/table_reload")
 def table_reload():
@@ -205,25 +255,24 @@ def serve_token(tno):
     conn = get_db()
 
     conn.execute(
-        "DELETE FROM tokens WHERE token_number=?",
+        "UPDATE tokens SET status='Serving' WHERE token_number=?",
         (tno,)
     )
 
     conn.commit()
     conn.close()
-
     return "OK"
-
-
 
 
 @app.route("/done_token/<int:tno>")
 def done_token(tno):
     conn = get_db()
+
     conn.execute(
-    "UPDATE tokens SET status='Done' WHERE token_number=?",
-    (tno,)
-)
+        "DELETE FROM tokens WHERE token_number=?",
+        (tno,)
+    )
+
     conn.commit()
     conn.close()
     return "OK"
@@ -340,6 +389,7 @@ def display_reload(counter_no):
     conn.close()
 
     return render_template("display_rows.html", tokens=tokens)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
