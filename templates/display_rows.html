@@ -1,0 +1,29 @@
+{% for row in tokens %}
+<tr {% if row.status == "Serving" %} style="background:#d4edda; font-weight:bold;" {% endif %}>
+    <td>{{ row.token_number }}</td>
+    <td>{{ row.name }}</td>
+    <td>{{ row.district }}</td>
+    <td>{{ row.panchayat }}</td>
+    <td>{{ row.ward }}</td>
+    <td>{{ row.purpose }}</td>
+    <td>{{ row.status }}</td>
+
+    <td>
+
+        {% if row.status == 'Waiting' %}
+            <button class="serve-btn"
+                onclick="serveToken({{ row.token_number }})">
+                Serve
+            </button>
+        {% endif %}
+
+        {% if row.status == 'Serving' %}
+            <button class="done-btn"
+                onclick="doneToken({{ row.token_number }})">
+                Done
+            </button>
+        {% endif %}
+
+    </td>
+</tr>
+{% endfor %}

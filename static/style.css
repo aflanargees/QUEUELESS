@@ -385,3 +385,61 @@ body {
         width: 100%;
     }
 }
+.serving-row {
+    background-color: #d4edda;
+    font-weight: bold;
+}
+
+.serving-badge {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.container {
+    width: 90%;
+    margin: auto;
+    margin-top: 40px;
+}
+
+.card {
+    background: rgba(255,255,255,0.95);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
+}
+
+.token-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.token-table th {
+    background-color: #1976d2;
+    color: white;
+    padding: 10px;
+}
+
+.token-table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.serving-row {
+    background-color: #d4edda;
+    font-weight: bold;
+}
+
+.serving-badge {
+    background-color: #28a745;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.counter-nav {
+    margin-bottom: 20px;
+}
+
+.counter-nav button {
+    margin-right: 10px;
+}

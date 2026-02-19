@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Counter {{ counter_no }} – QUEUELESS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- TOP BAR (same as admin) -->
+<div class="topbar">
+    <div class="brand">
+        COUNTER {{ counter_no }} – QUEUELESS
+        <span>Digital Queue Management System</span>
+    </div>
+</div>
+
+<!-- PAGE WRAPPER -->
+<div class="admin-wrapper">
+
+    <!-- DISPLAY CARD -->
+    <div class="admin-card">
+        <h2>Counter {{ counter_no }} Token Status</h2>
+
+        <div class="table-container">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th>Token No</th>
+                        <th>Name</th>
+                        <th>District</th>
+                        <th>Panchayat</th>
+                        <th>Ward</th>
+                        <th>Purpose</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="displayTableBody">
+                {% for row in tokens %}
+                    <tr {% if row.status == "Serving" %} style="background:#d4edda; font-weight:bold;" {% endif %}>
+                        <td>{{ row.token_number }}</td>
+                        <td>{{ row.name }}</td>
+                        <td>{{ row.district }}</td>
+                        <td>{{ row.panchayat }}</td>
+                        <td>{{ row.ward }}</td>
+                        <td>{{ row.purpose }}</td>
+                        <td>
+                            {% if row.status == "Serving" %}
+                                <span style="color:green; font-weight:bold;">Serving</span>
+                            {% else %}
+                                {{ row.status }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function refreshDisplay() {
+    fetch("/display_reload/{{ counter_no }}")
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById("displayTableBody").innerHTML = html;
+        });
+}
+
+setInterval(refreshDisplay, 3000);
+</script>
+<script>
+
+function serveToken(tokenNo) {
+    fetch("/serve_token/" + tokenNo)
+        .then(() => refreshDisplay());
+}
+
+function doneToken(tokenNo) {
+    fetch("/done_token/" + tokenNo)
+        .then(() => refreshDisplay());
+}
+
+function refreshDisplay() {
+    fetch("/display_reload/{{ counter_no }}")
+        .then(res => res.text())
+        .then(html => {
+            document.getElementById("displayTableBody").innerHTML = html;
+        });
+}
+
+refreshDisplay();              // 🔥 run immediately
+setInterval(refreshDisplay, 1000);   // 🔥 refresh every 1 sec
+
+
+</script>
+
+</body>
+</html>
+
+
+

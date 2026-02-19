@@ -128,24 +128,41 @@ def get_wards(panchayat):
 # -------------------- GENERATE TOKEN --------------------
 @app.route("/generate_token", methods=["POST"])
 def generate_token():
+
     data = request.json
     conn = get_db()
 
+    # 🔥 Check if same name already has waiting token
+    existing = conn.execute("""
+        SELECT token_number, counter_number 
+        FROM tokens 
+        WHERE name=? AND status='Waiting'
+    """, (data["name"],)).fetchone()
+
+    if existing:
+        conn.close()
+        return jsonify({
+            "message": "Token already generated",
+            "token": existing["token_number"],
+            "counter": existing["counter_number"]
+        })
+
+    # 🔹 Get next token number
     last_token = conn.execute(
         "SELECT MAX(token_number) FROM tokens"
     ).fetchone()[0]
 
     token_no = 1 if last_token is None else last_token + 1
+
     # 🔹 Assign counter in round-robin (1,2,3)
     last_counter = conn.execute(
-    "SELECT MAX(counter_number) FROM tokens"
+        "SELECT MAX(counter_number) FROM tokens"
     ).fetchone()[0]
 
     if last_counter is None:
-       counter_no = 1
+        counter_no = 1
     else:
-       counter_no = 1 if last_counter == 3 else last_counter + 1
-
+        counter_no = 1 if last_counter == 3 else last_counter + 1
 
     conn.execute("""
         INSERT INTO tokens (name, district, panchayat, ward, purpose,
@@ -158,14 +175,12 @@ def generate_token():
     ))
 
     conn.commit()
-
-    # Store in session
-    session["user_token"] = token_no
-    session["user_counter"] = counter_no
-
     conn.close()
 
-    return jsonify({"token": token_no, "counter": counter_no})
+    return jsonify({
+        "token": token_no,
+        "counter": counter_no
+    })
 
 
 # -------------------- ADMIN --------------------
@@ -189,38 +204,26 @@ def table_reload():
 def serve_token(tno):
     conn = get_db()
 
-    # Get counter of selected token
-    token = conn.execute(
-        "SELECT counter_number FROM tokens WHERE token_number=?",
+    conn.execute(
+        "DELETE FROM tokens WHERE token_number=?",
         (tno,)
-    ).fetchone()
+    )
 
-    if token:
-        counter_no = token["counter_number"]
-
-        # Reset serving only for that counter
-        conn.execute(
-            "UPDATE tokens SET status='Waiting' WHERE status='Serving' AND counter_number=?",
-            (counter_no,)
-        )
-
-        # Set selected token to Serving
-        conn.execute(
-            "UPDATE tokens SET status='Serving' WHERE token_number=?",
-            (tno,)
-        )
-
-        conn.commit()
-
+    conn.commit()
     conn.close()
+
     return "OK"
+
 
 
 
 @app.route("/done_token/<int:tno>")
 def done_token(tno):
     conn = get_db()
-    conn.execute("DELETE FROM tokens WHERE token_number=?", (tno,))
+    conn.execute(
+    "UPDATE tokens SET status='Done' WHERE token_number=?",
+    (tno,)
+)
     conn.commit()
     conn.close()
     return "OK"
@@ -270,6 +273,22 @@ def live_data():
         "serving_list": serving_list,
         "waiting_count": waiting
     })
+@app.route("/live_data/<int:counter_no>")
+def live_data_counter(counter_no):
+    conn = get_db()
+
+    serving = conn.execute(
+        "SELECT token_number FROM tokens WHERE status='Serving' AND counter_number=?",
+        (counter_no,)
+    ).fetchone()
+
+    conn.close()
+
+    token = serving["token_number"] if serving else None
+
+    return jsonify({
+        "token": token
+    })
 
 
 
@@ -288,6 +307,39 @@ def reset_token():
     session.pop("user_counter", None)
     return "OK"
 
+# -------------------- DISPLAY PAGE PER COUNTER --------------------
+@app.route("/display/<int:counter_no>")
+def display(counter_no):
+    conn = get_db()
+
+    tokens = conn.execute("""
+        SELECT * FROM tokens
+        WHERE counter_number=?
+        ORDER BY id DESC
+    """, (counter_no,)).fetchall()
+
+    conn.close()
+
+    return render_template(
+        "display.html",
+        tokens=tokens,
+        counter_no=counter_no
+    )
+
+
+@app.route("/display_reload/<int:counter_no>")
+def display_reload(counter_no):
+    conn = get_db()
+
+    tokens = conn.execute("""
+        SELECT * FROM tokens
+        WHERE counter_number=?
+        ORDER BY id DESC
+    """, (counter_no,)).fetchall()
+
+    conn.close()
+
+    return render_template("display_rows.html", tokens=tokens)
 
 if __name__ == "__main__":
     app.run(debug=True)

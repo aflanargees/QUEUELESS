@@ -179,34 +179,43 @@ function generateUserToken() {
     }
 
     fetch("/generate_token", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-    })
-    .then(res => res.json())
-    .then(result => {
-        
-        // SHOW VALUES IN POPUP
-        document.getElementById("modalToken").innerText = result.token;
-        document.getElementById("modalCounter").innerText = result.counter;
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(data)
+})
+.then(res => res.json())
+.then(result => {
 
-        let diff = result.token - result.counter;
-        let est = diff * 2;  // 2 minutes per token
-        document.getElementById("modalEstTime").innerText =
-            "Estimated Time: " + est + " minutes";
+    // If token already exists
+    if (result.message) {
+        alert("⚠ You already have a token!\n\nToken: " 
+              + result.token + 
+              "\nCounter: " + result.counter);
+        return;  // 🔥 Stop here (no popup)
+    }
 
-        // COLOR CODING
-        let color = "green";
-        if (diff > 10 && diff <= 30) color = "orange";
-        if (diff > 30) color = "red";
+    // First time generation
+    document.getElementById("modalToken").innerText = result.token;
+    document.getElementById("modalCounter").innerText = result.counter;
 
-        document.getElementById("modalToken").style.color = color;
+    let diff = result.token - result.counter;
+    let est = diff * 2;
+        // 🔥 COLOR CODING BACK
+    let color = "green";
+    if (diff > 10 && diff <= 30) color = "orange";
+    if (diff > 30) color = "red";
 
-        // SHOW POPUP
-        openModal();
-    })
+    document.getElementById("modalToken").style.color = color;
+
+    document.getElementById("modalEstTime").innerText =
+        "Estimated Time: " + est + " minutes";
+
+    openModal();
+})
+
     .catch(err => console.log(err));
 }
+
 // ---------------- LOAD PANCHAYATS ----------------
 function loadPanchayats() {
 
@@ -259,6 +268,13 @@ function openModal() {
 function closeModal() {
     document.getElementById("tokenModal").style.display = "none";
 }
+// 🔥 Auto-load panchayats if district already selected
+window.onload = function() {
+    let district = document.getElementById("district").value;
+    if (district) {
+        loadPanchayats();
+    }
+};
 
 </script>
 

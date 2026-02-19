@@ -1,0 +1,31 @@
+<table class="token-table">
+    <tr>
+        <th>Token No</th>
+        <th>Name</th>
+        <th>District</th>
+        <th>Panchayat</th>
+        <th>Ward</th>
+        <th>Purpose</th>
+        <th>Status</th>
+    </tr>
+
+    {% for t in tokens %}
+    <tr class="{% if t.status == 'Serving' %}serving-row{% endif %}">
+        <td>{{ t.token_number }}</td>
+        <td>{{ t.name }}</td>
+        <td>{{ t.district }}</td>
+        <td>{{ t.panchayat }}</td>
+        <td>{{ t.ward }}</td>
+        <td>{{ t.purpose }}</td>
+        <td>
+            {% if t.status == "Serving" %}
+                <span class="serving-badge">Serving</span>
+            {% else %}
+                {{ t.status }}
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
