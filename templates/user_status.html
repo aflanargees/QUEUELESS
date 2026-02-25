@@ -5,35 +5,61 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 
     <style>
+        body {
+            margin: 0;
+            background: url('/static/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+
+        /* CENTERED WHITE CARD */
         .status-wrapper {
-            width: 500px;
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            margin-top: 20px;
+            width: 520px;
+            background: rgba(255,255,255,0.92); /* soft white */
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.22);
+            margin: 50px auto;
+            backdrop-filter: blur(6px); /* premium blur effect */
         }
 
         .status-box {
-            background: #eef2f3;
-            padding: 22px;
-            border-radius: 12px;
+            background: #f4f6f8;
+            padding: 28px;
+            border-radius: 14px;
             text-align: center;
-            margin-top: 18px;
+            margin-top: 22px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+        }
+
+        .status-box p {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2c2c2c;
+            margin: 0;
+            padding-bottom: 6px;
         }
 
         .status-box h1 {
-            font-size: 42px;
-            margin-top: 10px;
+            font-size: 46px;
+            font-weight: bold;
+            margin: 5px 0 0;
+            color: #000;
         }
+
+        /* TOKEN COLORS */
+        .green  { color: #1b8a3c !important; }
+        .orange { color: #ff9800 !important; }
+        .red    { color: #e53935 !important; }
+
     </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
-<div class="topbar">
-    <div class="brand">QUEUELESS
+<!-- TOP BLUE BAR -->
+<div class="user-topbar">
+    <div class="user-brand">QUEUELESS
         <span>Digital Queue Management System</span>
     </div>
 </div>
@@ -49,21 +75,22 @@
         <a href="/user/help">Help</a>
     </div>
 
-    <!-- MAIN CONTENT (One Single Card) -->
+    <!-- MAIN CONTENT CARD -->
     <div class="status-wrapper">
-        <h2 style="text-align:center;">Your Live Status</h2>
+        <h2 style="text-align:center; color:#004aad; margin-bottom:25px; font-size:28px;">
+            Your Live Status
+        </h2>
 
         <!-- YOUR TOKEN -->
         <div class="status-box">
             <p>Your Token</p>
-            <h1 id="yourToken">{{ user_token if user_token else '--' }}</h1>
+            <h1 id="yourToken">--</h1>
         </div>
 
         <!-- YOUR COUNTER -->
         <div class="status-box">
             <p>Your Counter</p>
             <h1>{{ user_counter if user_counter else '--' }}</h1>
-
         </div>
 
         <!-- CURRENT SERVING -->
@@ -72,14 +99,13 @@
             <h1 id="currentServing">--</h1>
         </div>
 
-        <!-- TOTAL WAITING -->
-            <div class="status-box">
+        <!-- WAITING COUNT -->
+        <div class="status-box">
             <p>Total Waiting Tokens</p>
             <h1 id="waitingCount">--</h1>
-         </div>
+        </div>
 
     </div>
-
 </div>
 
 <script>
@@ -87,38 +113,54 @@ function updateLive() {
 
     let myToken = {{ user_token | tojson }};
     let myCounter = {{ user_counter | tojson }};
-    let myTokenBox = document.getElementById("yourToken");
 
     fetch("/live_data")
     .then(res => res.json())
     .then(info => {
 
-        let servingList = info.serving_list || [];
-        let waiting = info.waiting_count || 0;
+        document.getElementById("waitingCount").innerText = info.waiting_count;
 
-        document.getElementById("currentServing").innerText = "--";
-        document.getElementById("waitingCount").innerText = waiting;
+        fetch("/live_data/" + myCounter)
+        .then(r => r.json())
+        .then(counterInfo => {
 
-        if (myToken && myCounter) {
+            let servingToken = counterInfo.token;
+            document.getElementById("currentServing").innerText =
+                servingToken ? servingToken : "--";
 
-            let current = servingList.find(
-                item => item.counter == myCounter
-            );
+            let yt = document.getElementById("yourToken");
 
-            if (current) {
-
-                document.getElementById("currentServing").innerText = current.token;
-
-                let diff = myToken - current.token;
-
-                if (diff <= 10) myTokenBox.style.color = "green";
-                else if (diff <= 30) myTokenBox.style.color = "orange";
-                else myTokenBox.style.color = "red";
+            if (!myToken) {
+                yt.innerText = "--";
+                yt.className = "";
+                return;
             }
-        }
+
+            let t = Number(myToken);
+
+            /* COLOR BASED ON TOKEN RANGE */
+            if (t >= 1 && t <= 10) {
+                yt.className = "green";
+            }
+            else if (t >= 11 && t <= 20) {
+                yt.className = "orange";
+            }
+            else if (t >= 21 && t <= 50) {
+                yt.className = "red";
+            }
+            else {
+                yt.className = "red";
+            }
+
+            yt.innerText = t;
+        });
+
     });
 }
 
-setInterval(updateLive, 2000);
+setInterval(updateLive, 1200);
 updateLive();
 </script>
+
+</body>
+</html>

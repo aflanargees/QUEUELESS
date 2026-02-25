@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Login – QUEUELESS</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            background:
+                linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)),
+                url("/static/bg.jpg") no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .admin-login-card {
+            width: 450px;
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .admin-login-card h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .admin-login-card span {
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .admin-input {
+            width: 90%;
+            padding: 14px;
+            border-radius: 8px;
+            border: 1px solid #aaa;
+            margin: 12px auto;
+            display: block;
+            font-size: 16px;
+        }
+
+        .login-btn {
+            width: 80%;
+            padding: 14px;
+            margin-top: 15px;
+            background: #007bff;
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #005bbb;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-login-card">
+    <h1>Welcome to <span>QUEUELESS</span></h1>
+    <p style="margin-top:-10px; opacity:0.8;">Admin Login Portal</p>
+
+    <form action="/admin/login" method="POST">
+        <input class="admin-input" type="text" name="username" placeholder="Username" required>
+        <input class="admin-input" type="password" name="password" placeholder="Password" required>
+
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+</div>
+
+</body>
+</html>

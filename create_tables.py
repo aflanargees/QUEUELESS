@@ -3,6 +3,7 @@ import sqlite3
 conn = sqlite3.connect("queueless.db")
 cur = conn.cursor()
 
+
 cur.execute("""
     CREATE TABLE IF NOT EXISTS districts (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,6 +25,16 @@ cur.execute("""
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         panchayat_id INTEGER,
         ward_name TEXT,
+        FOREIGN KEY (panchayat_id) REFERENCES panchayats(id)
+    )
+""")
+
+cur.execute("""
+    CREATE TABLE IF NOT EXISTS panchayat_admins (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT,
+        panchayat_id INTEGER,
         FOREIGN KEY (panchayat_id) REFERENCES panchayats(id)
     )
 """)

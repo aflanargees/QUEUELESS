@@ -3,17 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard – QUEUELESS</title>
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <style>
+        body {
+            background: url('/static/bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Logout button */
+        .logout-btn {
+            padding: 10px 18px;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #bb2d3b;
+        }
+
+        .serve-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .serve-btn:hover {
+            background: #218838;
+        }
+
+        .done-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
 
 <!-- TOP BAR -->
-<div class="topbar">
-    <div class="brand">
-        ADMIN – QUEUELESS
+<div class="admin-topbar">
+    <div class="admin-brand">
+        {{ panchayat_name }} Panchayat – Admin Dashboard
         <span>Digital Queue Management System</span>
     </div>
+
+    <div class="topbar-right">
+        <form action="/admin/logout" method="POST">
+            <button class="logout-btn">Logout</button>
+        </form>
+    </div>
 </div>
+
 
 <!-- PAGE WRAPPER -->
 <div class="admin-wrapper">
@@ -21,21 +77,23 @@
     <!-- ADMIN CARD -->
     <div class="admin-card">
         <h2>Token Management</h2>
-          <!-- Counter Navigation -->
-<div style="margin-bottom:20px;">
-    <a href="/display/1" target="_blank">
-        <button class="serve-btn">Counter 1</button>
-    </a>
 
-    <a href="/display/2" target="_blank">
-        <button class="serve-btn">Counter 2</button>
-    </a>
+        <!-- Counter Navigation -->
+        <div style="margin-bottom:20px; text-align:center;">
+            <a href="/display/1" target="_blank">
+                <button class="serve-btn">Counter 1</button>
+            </a>
 
-    <a href="/display/3" target="_blank">
-        <button class="serve-btn">Counter 3</button>
-    </a>
-</div>
+            <a href="/display/2" target="_blank">
+                <button class="serve-btn">Counter 2</button>
+            </a>
 
+            <a href="/display/3" target="_blank">
+                <button class="serve-btn">Counter 3</button>
+            </a>
+        </div>
+
+        <!-- TABLE -->
         <div class="table-container">
             <table class="admin-table">
                 <thead>
@@ -65,35 +123,27 @@
                         <td>{{ row.status }}</td>
 
                         <td>
-
-                            <!-- SERVE -->
-                            {% if row.status != 'Serving' and row.status != 'Done' and row.status != 'Cancelled' %}
+                            {% if row.status == 'waiting' %}
                                 <button class="serve-btn" onclick="serveToken({{ row.token_number }})">Serve</button>
-                            {% endif %}
+                                <button class="done-btn" onclick="cancelToken({{ row.token_number }})">Cancel</button>
 
-                            <!-- DELETE (only if Done) -->
-                            {% if row.status == 'Done' %}
-                                <button class="done-btn" style="background:#dc3545;" onclick="deleteToken({{ row.token_number }})">Delete</button>
+                            {% elif row.status == 'serving' %}
+                                <button class="serve-btn" onclick="doneToken({{ row.token_number }})">Done</button>
                             {% endif %}
-
-                            <!-- CANCEL (until Done) -->
-                            {% if row.status != 'Done' and row.status != 'Cancelled' %}
-                                <button class="done-btn" style="background:#6c757d;" onclick="cancelToken({{ row.token_number }})">Cancel</button>
-                            {% endif %}
-
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
+
             </table>
         </div>
 
     </div>
 </div>
 
-<!-- JS -->
-<script>
 
+<!-- JAVASCRIPT -->
+<script>
 function serveToken(tokenNo) {
     fetch("/serve_token/" + tokenNo)
         .then(() => refreshTable());
@@ -109,12 +159,6 @@ function cancelToken(tokenNo) {
         .then(() => refreshTable());
 }
 
-/* 🔥 FIXED HERE */
-function deleteToken(tokenNo) {
-    fetch("/done_token/" + tokenNo)
-        .then(() => refreshTable());
-}
-
 function refreshTable() {
     fetch("/admin/table_reload")
         .then(res => res.text())
@@ -124,13 +168,7 @@ function refreshTable() {
 }
 
 setInterval(refreshTable, 3000);
-
 </script>
 
 </body>
 </html>
-
-
-
-
-

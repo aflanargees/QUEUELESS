@@ -54,85 +54,79 @@
 <body>
 
 <!-- TOP BAR -->
-<div class="topbar">
-    <div class="brand">QUEUELESS
+<div class="user-topbar">
+    <div class="user-brand">
+        QUEUELESS
         <span>Digital Queue Management System</span>
     </div>
 </div>
 
-<!-- PAGE LAYOUT -->
+<!-- PAGE CONTENT WRAPPER -->
 <div class="page-wrapper">
 
     <!-- SIDEBAR -->
     <div class="sidebar">
-    <a href="/user">Home</a>
-    <a href="/user/status">Live Status</a>
-    <a href="/user/services">Services</a>
-    <a href="/user/help">Help</a>
-</div>
+        <a href="/user">Home</a>
+        <a href="/user/status">Live Status</a>
+        <a href="/user/services">Services</a>
+        <a href="/user/help">Help</a>
+    </div>
 
-
-    <!-- MAIN CONTENT LEFT -->
+    <!-- MAIN CONTENT -->
     <div class="left-card">
         <h2>Generate Token</h2>
 
         <input type="text" id="name" placeholder="Full Name">
 
         <select id="district" name="district" onchange="loadPanchayats()">
-           <option value="">Select District</option>
+            <option value="">Select District</option>
             {% for district in districts %}
-                <option value="{{ district['district_name'] }}">
-                    {{ district['district_name'] }}
-                </option>
-             {% endfor %}    
+                <option value="{{ district['district_name'] }}">{{ district['district_name'] }}</option>
+            {% endfor %}
         </select>
 
-
-         <select id="panchayat" onchange="loadWards()">
-                 <option value="">Select Panchayat</option>
-         </select>
-
+        <select id="panchayat" onchange="loadWards()">
+            <option value="">Select Panchayat</option>
+        </select>
 
         <select id="ward">
-                <option value="">Select Ward</option>
+            <option value="">Select Ward</option>
         </select>
-        
+
         <select id="purpose">
-    <option value="">Select Purpose</option>
+            <option value="">Select Purpose</option>
 
-    <option>Birth Certificate</option>
-    <option>Death Certificate</option>
-    <option>Marriage Certificate</option>
-    <option>Caste Certificate</option>
-    <option>Income Certificate</option>
-    <option>Residence Certificate</option>
-    <option>Property Tax Payment</option>
-    <option>Building Tax</option>
-    <option>Building Permit</option>
-    <option>Trade License</option>
-    <option>Renewal of Trade License</option>
-    <option>Water Connection</option>
-    <option>Electricity Complaint</option>
-    <option>Sanitation Complaint</option>
-    <option>Street Light Complaint</option>
-    <option>Waste Management Service</option>
-    <option>Welfare Pension Application</option>
-    <option>Widow Pension</option>
-    <option>Old Age Pension</option>
-    <option>Disability Pension</option>
-    <option>Scholarship Certificate</option>
-    <option>Land Ownership Certificate</option>
-    <option>Building Completion Certificate</option>
-    <option>Non-Availability Certificate</option>
-    <option>Other Services</option>
-
-</select>
+            <option>Birth Certificate</option>
+            <option>Death Certificate</option>
+            <option>Marriage Certificate</option>
+            <option>Caste Certificate</option>
+            <option>Income Certificate</option>
+            <option>Residence Certificate</option>
+            <option>Property Tax Payment</option>
+            <option>Building Tax</option>
+            <option>Building Permit</option>
+            <option>Trade License</option>
+            <option>Renewal of Trade License</option>
+            <option>Water Connection</option>
+            <option>Electricity Complaint</option>
+            <option>Sanitation Complaint</option>
+            <option>Street Light Complaint</option>
+            <option>Waste Management Service</option>
+            <option>Welfare Pension Application</option>
+            <option>Widow Pension</option>
+            <option>Old Age Pension</option>
+            <option>Disability Pension</option>
+            <option>Scholarship Certificate</option>
+            <option>Land Ownership Certificate</option>
+            <option>Building Completion Certificate</option>
+            <option>Non-Availability Certificate</option>
+            <option>Other Services</option>
+        </select>
 
         <button onclick="generateUserToken()">Generate Token</button>
     </div>
 
-</div>
-
+</div> <!-- end page-wrapper -->
 
 <!-- TOKEN POPUP MODAL -->
 <div id="tokenModal" class="modal">
@@ -153,7 +147,6 @@
     </div>
 </div>
 
-
 <!-- JAVASCRIPT -->
 <script>
 
@@ -167,56 +160,44 @@ function generateUserToken() {
         purpose: document.getElementById("purpose").value
     };
 
-    // VALIDATION
-    if (!data.name || !data.district ||
-    !data.panchayat ||
-    !data.ward ||
-    !data.purpose) {
-
-
+    if (!data.name || !data.district || !data.panchayat || !data.ward || !data.purpose) {
         alert("Please fill all fields before generating token!");
         return;
     }
 
     fetch("/generate_token", {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(data)
-})
-.then(res => res.json())
-.then(result => {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(result => {
 
-    // If token already exists
-    if (result.message) {
-        alert("⚠ You already have a token!\n\nToken: " 
-              + result.token + 
-              "\nCounter: " + result.counter);
-        return;  // 🔥 Stop here (no popup)
-    }
+        if (result.message) {
+            alert("⚠ You already have a token!\n\nToken: " 
+                  + result.token + 
+                  "\nCounter: " + result.counter);
+            return;
+        }
 
-    // First time generation
-    document.getElementById("modalToken").innerText = result.token;
-    document.getElementById("modalCounter").innerText = result.counter;
+        document.getElementById("modalToken").innerText = result.token;
+        document.getElementById("modalCounter").innerText = result.counter;
 
-    let diff = result.token - result.counter;
-    let est = diff * 2;
-        // 🔥 COLOR CODING BACK
-    let color = "green";
-    if (diff > 10 && diff <= 30) color = "orange";
-    if (diff > 30) color = "red";
+        let diff = result.token - result.counter;
+        let est = diff * 2;
 
-    document.getElementById("modalToken").style.color = color;
+        let color = "green";
+        if (diff > 10 && diff <= 30) color = "orange";
+        if (diff > 30) color = "red";
 
-    document.getElementById("modalEstTime").innerText =
-        "Estimated Time: " + est + " minutes";
+        document.getElementById("modalToken").style.color = color;
+        document.getElementById("modalEstTime").innerText = "Estimated Time: " + est + " minutes";
 
-    openModal();
-})
-
+        openModal();
+    })
     .catch(err => console.log(err));
 }
 
-// ---------------- LOAD PANCHAYATS ----------------
 function loadPanchayats() {
 
     let district = document.getElementById("district").value;
@@ -232,15 +213,11 @@ function loadPanchayats() {
             p.innerHTML += '<option value="' + item + '">' + item + '</option>';
         });
 
-        // Reset wards
-        document.getElementById("ward").innerHTML =
-            '<option value="">Select Ward</option>';
+        document.getElementById("ward").innerHTML = '<option value="">Select Ward</option>';
     })
     .catch(err => console.log(err));
 }
 
-
-// ---------------- LOAD WARDS ----------------
 function loadWards() {
 
     let panchayat = document.getElementById("panchayat").value;
@@ -259,16 +236,14 @@ function loadWards() {
     .catch(err => console.log(err));
 }
 
-// OPEN POPUP
 function openModal() {
     document.getElementById("tokenModal").style.display = "block";
 }
 
-// CLOSE POPUP
 function closeModal() {
     document.getElementById("tokenModal").style.display = "none";
 }
-// 🔥 Auto-load panchayats if district already selected
+
 window.onload = function() {
     let district = document.getElementById("district").value;
     if (district) {

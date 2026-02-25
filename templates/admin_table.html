@@ -11,7 +11,7 @@
 
     <td>
 
-        {% if row.status == 'Waiting' %}
+        {% if row.status == 'waiting' %}
             <button class="serve-btn"
                 onclick="serveToken({{ row.token_number }})">
                 Serve
@@ -24,7 +24,7 @@
             </button>
         {% endif %}
 
-        {% if row.status == 'Serving' %}
+        {% if row.status == 'serving' %}
             <button class="done-btn"
                 onclick="doneToken({{ row.token_number }})">
                 Done

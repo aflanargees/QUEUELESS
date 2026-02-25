@@ -1,17 +1,15 @@
 /* ================= GLOBAL ================= */
-
 body {
     margin: 0;
     font-family: Arial, sans-serif;
     min-height: 100vh;
     background:
-        linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+        linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35)),
         url("/static/bg.jpg") no-repeat center center fixed;
     background-size: cover;
 }
 
 /* ================= WELCOME WRAPPER ================= */
-
 .welcome-wrapper {
     height: 100vh;
     display: flex;
@@ -39,7 +37,6 @@ body {
 }
 
 /* ================= INPUTS ================= */
-
 .welcome-input {
     width: 90%;
     padding: 14px;
@@ -51,7 +48,6 @@ body {
 }
 
 /* ================= CAPTCHA ================= */
-
 .captcha-row {
     display: flex;
     justify-content: center;
@@ -85,7 +81,6 @@ body {
 }
 
 /* ================= OTP BUTTON ================= */
-
 .otp-btn {
     width: 60%;
     padding: 14px;
@@ -101,12 +96,13 @@ body {
 .otp-btn:hover {
     background: #0056b3;
 }
+
 /* =========================================================
-   USER DASHBOARD (FULL FIX)
+   USER DASHBOARD
 ========================================================= */
 
 /* TOP BAR */
-.topbar {
+.user-topbar {
     width: 100%;
     height: 65px;
     background: #007bff;
@@ -116,21 +112,22 @@ body {
     left: 0;
     display: flex;
     align-items: center;
-    padding-left: 240px;
+    padding-left: 30px;
     z-index: 1000;
 }
 
-.topbar .brand {
-    font-size: 24px;
-    font-weight: bold;
+.user-brand {
+    font-size: 26px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
 }
 
-.topbar .brand span {
+.user-brand span {
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     opacity: 0.9;
+    margin-top: -3px;
 }
-
 
 /* SIDEBAR */
 .sidebar {
@@ -141,7 +138,6 @@ body {
     position: fixed;
     top: 65px;
     left: 0;
-    height: calc(100vh - 65px);
     padding-top: 20px;
 }
 
@@ -158,58 +154,53 @@ body {
     border-radius: 6px;
 }
 
-
-/* PAGE LAYOUT */
+/* PAGE WRAPPER (FIXED) */
 .page-wrapper {
-    display: flex;
-    min-height: 100vh;
-    margin-left: 240px;    /* align with sidebar */
-    margin-top: 100px;     /* align with topbar */
-    gap: 40px;
-    padding: 20px;
+    margin-left: 240px;   /* Sidebar width */
+    margin-top: 120px;
+    display: block;       /* NO centering */
+    width: calc(100% - 240px);
 }
 
-
-/* LEFT CARD (FORM BOX) */
+/* LEFT CARD (FINAL OLD UI LOOK) */
 .left-card {
-    width: 1050px;
+    width: 1050px !important;     /* SAME AS YOUR OLD UI */
     background: white;
-    padding: 30px;
-    border-radius: 16px;
+    padding: 40px;
+    border-radius: 20px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    margin: 0;                   /* NO CENTERING */
 }
 
-.left-card h2 {
-    margin-bottom: 20px;
-}
-
+/* INPUTS */
 .left-card input,
 .left-card select {
     width: 100%;
-    padding: 14px;
-    margin: 12px 0;
-    font-size: 16px;
+    padding: 15px;
+    margin: 16px 0;
     border-radius: 8px;
     border: 1px solid #ccc;
+    font-size: 16px;
 }
 
+/* BUTTON */
 .left-card button {
     width: 100%;
-    padding: 14px;
+    padding: 16px;
     background: #007bff;
-    border: none;
     color: white;
+    border: none;
+    border-radius: 10px;
     font-size: 18px;
-    border-radius: 8px;
     cursor: pointer;
+    margin-top: 20px;
 }
 
 .left-card button:hover {
-    background: #005bbb;
+    background: #006ae0;
 }
 
-
-/* RIGHT CARD (LIVE STATUS) */
+/* RIGHT CARD (admin pages only) */
 .right-card {
     width: 380px;
     padding: 30px;
@@ -218,26 +209,57 @@ body {
     box-shadow: 0 5px 20px rgba(0,0,0,0.15);
 }
 
-.right-card h2 {
-    text-align: center;
+/* =========================================================
+   ADMIN DASHBOARD
+========================================================= */
+
+/* ADMIN TOPBAR */
+.admin-topbar {
+    width: 100%;
+    height: 65px;
+    background: #007bff;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px ;
+    z-index: 2000;
 }
 
-.status-box {
-    background: #eef2f3;
-    padding: 30px;
-    border-radius: 12px;
-    text-align: center;
-    margin-top: 25px;
+.admin-brand {
+    font-size: 24px;
+    font-weight: 900;
 }
 
-.status-box h1 {
-    font-size: 42px;
-    color: #007bff;
+.admin-brand span {
+    display: block;
+    font-size: 13px;
+    opacity: 0.9;
+    margin-top: -4px;
 }
-/* ================= ADMIN PAGE ================= */
 
+/* LOGOUT BUTTON */
+.logout-btn {
+    padding: 10px 15px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 40px;
+}
+
+.logout-btn:hover {
+    background: #b02a37;
+}
+
+/* ADMIN WRAPPER */
 .admin-wrapper {
-    margin-top: 100px;       /* avoid topbar overlap */
+    margin-top: 100px;
     display: flex;
     justify-content: center;
     padding: 20px;
@@ -247,16 +269,15 @@ body {
     width: 90%;
     max-width: 1200px;
     background: rgba(255,255,255,0.95);
-    backdrop-filter: blur(4px);
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.15);
 }
 
+/* TABLE */
 .table-container {
     max-height: 450px;
     overflow-y: auto;
-    margin-top: 15px;
 }
 
 .admin-table {
@@ -268,7 +289,6 @@ body {
     background: #007bff;
     color: white;
     padding: 12px;
-    text-align: left;
     position: sticky;
     top: 0;
 }
@@ -292,8 +312,12 @@ body {
     cursor: pointer;
 }
 
+.serve-btn:hover {
+    background: #218838;
+}
+
 .done-btn {
-    background: #dc3545;
+    background: #6c757d;
     color: white;
     padding: 6px 12px;
     border: none;
@@ -301,145 +325,38 @@ body {
     cursor: pointer;
 }
 
-.serve-btn:hover {
-    background: #218838;
+.done-btn:hover {
+    background: #565e64;
 }
 
-.done-btn:hover {
-    background: #c82333;
-}
+/* MODAL */
 .modal {
     display: none;
     position: fixed;
-    z-index: 9999;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.4);
+    z-index: 9999;
 }
 
 .modal-content {
     background: white;
     width: 350px;
-    margin: 10% auto;
     padding: 20px;
     border-radius: 10px;
-    text-align: center;
-    animation: popup 0.3s ease;
-}
-
-@keyframes popup {
-    from {transform: scale(0.7); opacity: 0;}
-    to {transform: scale(1); opacity: 1;}
-}
-
-.closeBtn {
-    float: right;
-    cursor: pointer;
-    font-size: 30px;
-    margin-top: -10px;
-}
-
-.tokenNumber, .counterNumber {
-    font-weight: bold;
-    font-size: 26px;
-}
-.modal-est {
-    margin-top: 10px;
-    font-size: 18px;
-    font-weight: 600;
-}
- 
-
-#name {
-    width: 98%;
-    margin: 0 auto;
-    display: block;
-}
- 
-.admin-table td, .admin-table th {
-    white-space: nowrap;
+    margin: 10% auto;
     text-align: center;
 }
-
-.main-content {
-    flex: 1;
-    min-height: 100vh;
-}
-.help-wrapper {
-    min-height: 100vh;
-}
-/* Mobile Layout Fix */
-@media (max-width: 768px) {
-    .page-wrapper {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        min-height: auto;
-    }
-
-    .main-content {
-        width: 100%;
-    }
-}
-.serving-row {
-    background-color: #d4edda;
-    font-weight: bold;
+.token-green {
+    color: green !important;
 }
 
-.serving-badge {
-    background-color: #28a745;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-.container {
-    width: 90%;
-    margin: auto;
-    margin-top: 40px;
+.token-orange {
+    color: orange !important;
 }
 
-.card {
-    background: rgba(255,255,255,0.95);
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0px 5px 15px rgba(0,0,0,0.3);
-}
-
-.token-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.token-table th {
-    background-color: #1976d2;
-    color: white;
-    padding: 10px;
-}
-
-.token-table td {
-    padding: 10px;
-    text-align: center;
-}
-
-.serving-row {
-    background-color: #d4edda;
-    font-weight: bold;
-}
-
-.serving-badge {
-    background-color: #28a745;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-.counter-nav {
-    margin-bottom: 20px;
-}
-
-.counter-nav button {
-    margin-right: 10px;
+.token-red {
+    color: red !important;
 }
