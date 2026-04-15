@@ -81,7 +81,7 @@
         <select id="district" name="district" onchange="loadPanchayats()">
             <option value="">Select District</option>
             {% for district in districts %}
-                <option value="{{ district['district_name'] }}">{{ district['district_name'] }}</option>
+                <option value="{{ district['id'] }}">{{ district['district_name'] }}</option>
             {% endfor %}
         </select>
 
@@ -149,7 +149,6 @@
 
 <!-- JAVASCRIPT -->
 <script>
-
 function generateUserToken() {
 
     let data = {
@@ -173,13 +172,20 @@ function generateUserToken() {
     .then(res => res.json())
     .then(result => {
 
-        if (result.message) {
-            alert("⚠ You already have a token!\n\nToken: " 
-                  + result.token + 
-                  "\nCounter: " + result.counter);
+        // ⚠ DUPLICATE TOKEN
+        if (result.duplicate) {
+            alert(
+                "⚠ You already have a token!\n\n" +
+                "Token: " + result.token_number + "\n" +
+                "Counter: " + result.counter_number
+            );
+
+            // 🔥 REDIRECT EVEN FOR DUPLICATE
+            window.location.href = "/user/status";
             return;
         }
 
+        // ✅ NEW TOKEN
         document.getElementById("modalToken").innerText = result.token;
         document.getElementById("modalCounter").innerText = result.counter;
 
@@ -194,23 +200,37 @@ function generateUserToken() {
         document.getElementById("modalEstTime").innerText = "Estimated Time: " + est + " minutes";
 
         openModal();
+
+        // 🔥 MAIN FIX (AUTO REDIRECT)
+        setTimeout(() => {
+            window.location.href = "/user/status";
+        }, 2000);
+
     })
     .catch(err => console.log(err));
 }
-
 function loadPanchayats() {
 
     let district = document.getElementById("district").value;
 
-    fetch("/get_panchayats/" + encodeURIComponent(district))
+    if (!district) return;
+
+    fetch("/get_panchayats/" + district)
     .then(res => res.json())
     .then(data => {
+
+        console.log("Panchayats:", data); // debug
 
         let p = document.getElementById("panchayat");
         p.innerHTML = '<option value="">Select Panchayat</option>';
 
+        if (data.length === 0) {
+            p.innerHTML = '<option value="">No Panchayats Found</option>';
+            return;
+        }
+
         data.forEach(function(item) {
-            p.innerHTML += '<option value="' + item + '">' + item + '</option>';
+            p.innerHTML += `<option value="${item.name}">${item.name}</option>`;
         });
 
         document.getElementById("ward").innerHTML = '<option value="">Select Ward</option>';
@@ -230,8 +250,9 @@ function loadWards() {
         w.innerHTML = '<option value="">Select Ward</option>';
 
         data.forEach(function(item) {
-            w.innerHTML += '<option value="' + item + '">' + item + '</option>';
+            w.innerHTML += `<option value="${item.name}">${item.name}</option>`;
         });
+
     })
     .catch(err => console.log(err));
 }

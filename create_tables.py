@@ -39,6 +39,14 @@ cur.execute("""
     )
 """)
 
+cur.execute("""
+CREATE TABLE IF NOT EXISTS counters (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    counter_name TEXT NOT NULL,
+    is_active INTEGER DEFAULT 0
+)
+""")
+
 conn.commit()
 conn.close()
 

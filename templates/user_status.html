@@ -114,49 +114,44 @@ function updateLive() {
     let myToken = {{ user_token | tojson }};
     let myCounter = {{ user_counter | tojson }};
 
+    // WAITING COUNT
     fetch("/live_data")
     .then(res => res.json())
     .then(info => {
+        document.getElementById("waitingCount").innerText =
+            info.waiting_count ?? "--";
+    });
 
-        document.getElementById("waitingCount").innerText = info.waiting_count;
-
+    // CURRENT SERVING
+    if (myCounter) {
         fetch("/live_data/" + myCounter)
         .then(r => r.json())
         .then(counterInfo => {
 
             let servingToken = counterInfo.token;
             document.getElementById("currentServing").innerText =
-                servingToken ? servingToken : "--";
-
-            let yt = document.getElementById("yourToken");
-
-            if (!myToken) {
-                yt.innerText = "--";
-                yt.className = "";
-                return;
-            }
-
-            let t = Number(myToken);
-
-            /* COLOR BASED ON TOKEN RANGE */
-            if (t >= 1 && t <= 10) {
-                yt.className = "green";
-            }
-            else if (t >= 11 && t <= 20) {
-                yt.className = "orange";
-            }
-            else if (t >= 21 && t <= 50) {
-                yt.className = "red";
-            }
-            else {
-                yt.className = "red";
-            }
-
-            yt.innerText = t;
+                servingToken ?? "--";
         });
+    }
 
-    });
+    // YOUR TOKEN
+    let yt = document.getElementById("yourToken");
+
+    if (!myToken) {
+        yt.innerText = "--";
+        yt.className = "";
+        return;
+    }
+
+    let t = Number(myToken);
+
+    if (t >= 1 && t <= 10) yt.className = "green";
+    else if (t <= 20) yt.className = "orange";
+    else yt.className = "red";
+
+    yt.innerText = t;
 }
+
 
 setInterval(updateLive, 1200);
 updateLive();

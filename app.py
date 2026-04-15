@@ -1,11 +1,11 @@
-from flask import Flask, render_template, request, jsonify, session,redirect
-import sqlite3,random
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+import sqlite3, random
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 
-# -------------------- DATABASE --------------------
+# ---------------- DATABASE ----------------
 def get_db():
     conn = sqlite3.connect("queueless.db")
     conn.row_factory = sqlite3.Row
@@ -40,17 +40,36 @@ def create_master_tables():
             FOREIGN KEY (panchayat_id) REFERENCES panchayats(id)
         )
     """)
+
     cur.execute("""
-    CREATE TABLE IF NOT EXISTS panchayat_admins (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        username TEXT UNIQUE,
-        password TEXT,
-        panchayat_id INTEGER,
-        FOREIGN KEY (panchayat_id) REFERENCES panchayats(id)
-    )
-""")
+        CREATE TABLE IF NOT EXISTS panchayat_admins (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            username TEXT UNIQUE,
+            password TEXT,
+            panchayat_id INTEGER,
+            FOREIGN KEY (panchayat_id) REFERENCES panchayats(id)
+        )
+    """)
+
+    # ⭐ CREATE COUNTERS TABLE (MISSING BEFORE)
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS counters (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            counter_number INTEGER,
+            is_active INTEGER DEFAULT 0
+        )
+    """)
 
     conn.commit()
+
+    # Insert default counters if empty
+    count = conn.execute("SELECT COUNT(*) FROM counters").fetchone()[0]
+    if count == 0:
+        conn.execute("INSERT INTO counters(counter_number, is_active) VALUES (1, 0)")
+        conn.execute("INSERT INTO counters(counter_number, is_active) VALUES (2, 0)")
+        conn.execute("INSERT INTO counters(counter_number, is_active) VALUES (3, 0)")
+        conn.commit()
+
     conn.close()
 
 
@@ -73,206 +92,225 @@ def init_db():
     """)
     conn.commit()
     conn.close()
+
+
 def seed_data_if_empty():
     conn = get_db()
     count = conn.execute("SELECT COUNT(*) FROM districts").fetchone()[0]
-
     if count == 0:
-        print("Seeding master data...")
-        import import_data  # this runs your import script
-
+        print("Seeding master data…")
+        import import_data
     conn.close()
+
 
 create_master_tables()
 init_db()
 seed_data_if_empty()
 
 
-# -------------------- ROUTES --------------------
+# ---------------- USER PAGES ----------------
 @app.route("/")
 def welcome():
     return render_template("welcome.html")
 
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
+
+
 @app.route("/user")
 def user():
+    if not session.get("logged_in"):
+        return redirect("/")
+    conn = get_db()
+    districts = conn.execute("SELECT id, district_name FROM districts").fetchall()
+    conn.close()
+    return render_template("user.html", districts=districts)
 
+
+@app.route("/user/status")
+def user_status():
     if not session.get("logged_in"):
         return redirect("/")
 
+    user_token = session.get("user_token")
+    user_counter = session.get("user_counter")
+
+    print("TOKEN:", user_token)      # DEBUG
+    print("COUNTER:", user_counter)  # DEBUG
+
+    return render_template(
+        "user_status.html",
+        user_token=user_token,
+        user_counter=user_counter
+    )
+
+@app.route("/services")
+def services():
+    return render_template("services.html")
+
+
+@app.route("/user/services")
+def user_services():
+    return render_template("services.html")
+
+
+@app.route("/live_status")
+def live_status():
     conn = get_db()
-    districts = conn.execute(
-        "SELECT id, district_name FROM districts ORDER BY district_name"
-    ).fetchall()
+    rows = conn.execute("SELECT * FROM tokens ORDER BY token_number DESC").fetchall()
     conn.close()
+    return render_template("display_table.html", tokens=rows)
 
-    return render_template("user.html", districts=districts)
 
+@app.route("/help")
+def help_page():
+    return render_template("help.html")
+
+
+@app.route("/user/help")
+def user_help():
+    return render_template("help.html")
+
+
+# ---------------- OTP LOGIN ----------------
 @app.route("/send_otp", methods=["POST"])
 def send_otp():
-
     data = request.json
-    phone = data["phone"]
-
     otp = str(random.randint(1000, 9999))
-
-    session["login_phone"] = phone
+    session["login_phone"] = data["phone"]
     session["login_otp"] = otp
-
-    print("Demo OTP:", otp)  # check terminal
-
-    return jsonify({
-    "status": "sent",
-    "otp": otp
-})
-
+    print("OTP:", otp)
+    return jsonify({"status": "sent", "otp": otp})
 
 
 @app.route("/verify_login_otp", methods=["POST"])
 def verify_login_otp():
-    data = request.json
-    user_otp = data["otp"]
-
-    print("Entered OTP:", user_otp)
-    print("Session OTP:", session.get("login_otp"))
-
-    if "login_otp" in session and user_otp == session["login_otp"]:
+    if request.json["otp"] == session.get("login_otp"):
         session["logged_in"] = True
         session.pop("login_otp", None)
-
-        print("Login Success ✅")
         return jsonify({"status": "success"})
-
-    print("Login Failed ❌")
     return jsonify({"status": "failed"})
 
 
-# -------------------- GET PANCHAYATS --------------------
-@app.route("/get_panchayats/<path:district>")
-def get_panchayats(district):
-    conn = get_db()
-    rows = conn.execute("""
-        SELECT panchayat_name
-        FROM panchayats
-        JOIN districts ON panchayats.district_id = districts.id
-        WHERE districts.district_name = ?
-        ORDER BY panchayat_name
-    """, (district,)).fetchall()
-    conn.close()
-    return jsonify([r["panchayat_name"] for r in rows])
-
-
-# -------------------- GET WARDS --------------------
-@app.route("/get_wards/<path:panchayat>")
-def get_wards(panchayat):
-    conn = get_db()
-    rows = conn.execute("""
-        SELECT ward_name
-        FROM wards
-        JOIN panchayats ON wards.panchayat_id = panchayats.id
-        WHERE panchayats.panchayat_name = ?
-        ORDER BY CAST(SUBSTR(ward_name, 6) AS INTEGER)
-    """, (panchayat,)).fetchall()
-    conn.close()
-    return jsonify([r["ward_name"] for r in rows])
-
-
-# -------------------- GENERATE TOKEN --------------------
+# ---------------- TOKEN GENERATION ----------------
 @app.route("/generate_token", methods=["POST"])
 def generate_token():
-
     data = request.json
     conn = get_db()
 
-    # Check existing waiting token
+    # ⭐ CHECK DUPLICATE TOKEN (same name in same panchayat still waiting)
     existing = conn.execute("""
-        SELECT token_number, counter_number 
-        FROM tokens 
-        WHERE name=? AND status='waiting'
-    """, (data["name"],)).fetchone()
+        SELECT token_number, counter_number
+        FROM tokens
+        WHERE name=? AND district=? AND panchayat=? AND status='waiting'
+    """, (data["name"], data["district"], data["panchayat"])).fetchone()
 
     if existing:
         session["user_token"] = existing["token_number"]
         session["user_counter"] = existing["counter_number"]
-        conn.close()
+
         return jsonify({
-            "message": "Token already generated",
-            "token": existing["token_number"],
-            "counter": existing["counter_number"]
+            "duplicate": True,
+            "token_number": existing["token_number"],
+            "counter_number": existing["counter_number"]
         })
 
-    # Get next token
-    last_token = conn.execute(
-        "SELECT MAX(token_number) FROM tokens"
-    ).fetchone()[0]
-
-    token_no = 1 if last_token is None else last_token + 1
-
-    # Counter round-robin 1–3
-    last_counter = conn.execute(
-        "SELECT MAX(counter_number) FROM tokens"
-    ).fetchone()[0]
-
-    counter_no = 1 if last_counter is None else (1 if last_counter == 3 else last_counter + 1)
-
-    # Get panchayat_id
-    row = conn.execute(
+    # ⭐ GET PANCHAYAT ID FIRST (IMPORTANT)
+    p_row = conn.execute(
         "SELECT id FROM panchayats WHERE TRIM(LOWER(panchayat_name)) = TRIM(LOWER(?))",
         (data["panchayat"],)
     ).fetchone()
 
-    if row is None:
-        return jsonify({"error": "Invalid panchayat!"}), 400
+    if not p_row:
+        conn.close()
+        return jsonify({"error": "Invalid panchayat selected"}), 400
 
-    panchayat_id = row[0]
+    panchayat_id = p_row["id"]
 
-    # INSERT TOKEN
+    # ⭐ GENERATE NEW TOKEN
+    last = conn.execute("SELECT MAX(token_number) FROM tokens").fetchone()[0]
+    token_no = 1 if last is None else last + 1
+
+    # ⭐ COUNTERS FOR THAT PANCHAYAT ONLY
+    active = conn.execute(
+        "SELECT id FROM counters WHERE is_active=1 AND panchayat_id=?",
+        (panchayat_id,)
+    ).fetchall()
+
+    if not active:
+        return jsonify({"error": "No counters active"}), 400
+
+    counter_no = random.choice(active)[0]
+
+    # ⭐ INSERT NEW TOKEN
     conn.execute("""
-        INSERT INTO tokens (name, district, panchayat, ward, purpose,
-            token_number, counter_number, status, panchayat_id)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        INSERT INTO tokens(name, district, panchayat, ward, purpose, token_number,
+            counter_number, status, panchayat_id)
+        VALUES(?,?,?,?,?,?,?,?,?)
     """, (
-        data["name"],
-        data["district"],
-        data["panchayat"],
-        data["ward"],
-        data["purpose"],
-        token_no,
-        counter_no,
-        "waiting",
-        panchayat_id
+        data["name"], data["district"], data["panchayat"], data["ward"],
+        data["purpose"], token_no, counter_no, "waiting", panchayat_id
     ))
-
-    session["user_token"] = token_no
-    session["user_counter"] = counter_no
 
     conn.commit()
     conn.close()
 
+    session["user_token"] = token_no
+    session["user_counter"] = counter_no
+
     return jsonify({
+        "duplicate": False,
         "token": token_no,
         "counter": counter_no
     })
-# -------------------- ADMIN --------------------
+
+# ---------------- ADMIN LOGIN ----------------
+@app.route("/admin/login", methods=["GET","POST"])
+def admin_login():
+    if request.method == "POST":
+        user = request.form["username"]
+        pwd = request.form["password"]
+        conn = get_db()
+        admin = conn.execute("""
+            SELECT * FROM panchayat_admins
+            WHERE username=? AND password=?
+        """, (user, pwd)).fetchone()
+        conn.close()
+
+        if admin:
+            session["admin"] = True
+            session["panchayat_id"] = admin["panchayat_id"]
+            return redirect("/admin/dashboard")
+        return "Invalid login"
+
+    return render_template("admin_login.html")
+
+
+@app.route("/admin/logout", methods=["POST"])
+def admin_logout():
+    session.clear()
+    return redirect("/admin/login")
+
+
+# ---------------- ADMIN DASHBOARD ----------------
 @app.route("/admin/dashboard")
 def admin_dashboard():
     if not session.get("admin"):
         return redirect("/admin/login")
 
     p_id = session["panchayat_id"]
-
     conn = get_db()
 
-    # 🔥 GET PANCHAYAT NAME
     pname = conn.execute("SELECT panchayat_name FROM panchayats WHERE id=?", (p_id,)).fetchone()[0]
-
-    tokens = conn.execute("""
-        SELECT * FROM tokens WHERE panchayat_id=?
-    """, (p_id,)).fetchall()
+    tokens = conn.execute("SELECT * FROM tokens WHERE panchayat_id=?", (p_id,)).fetchall()
+    counters = conn.execute("SELECT * FROM counters").fetchall()
 
     conn.close()
+    return render_template("admin.html", tokens=tokens, counters=counters, panchayat_name=pname)
 
-    return render_template("admin.html", tokens=tokens, panchayat_name=pname)
 
 @app.route("/admin/table_reload")
 def table_reload():
@@ -280,242 +318,154 @@ def table_reload():
         return ""
 
     p_id = session["panchayat_id"]
-
     conn = get_db()
-    rows = conn.execute(
-        "SELECT * FROM tokens WHERE panchayat_id=? ORDER BY id DESC",
-        (p_id,)
-    ).fetchall()
+    rows = conn.execute("SELECT * FROM tokens WHERE panchayat_id=?", (p_id,)).fetchall()
     conn.close()
 
     return render_template("admin_table.html", tokens=rows)
 
-@app.route("/admin/login", methods=["GET", "POST"])
-def admin_login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
 
-        conn = get_db()
-        cur = conn.cursor()
-
-        # Check admin credentials
-        cur.execute("SELECT * FROM panchayat_admins WHERE username=? AND password=?", 
-                    (username, password))
-        admin = cur.fetchone()
-
-        if admin:
-            # Store admin session + panchayat_id
-            session["admin"] = True
-            session["panchayat_id"] = admin["panchayat_id"]
-            return redirect("/admin/dashboard")
-        else:
-            return "Invalid login bro"
-
-    return render_template("admin_login.html")
-
-
-@app.route("/admin/logout", methods=["POST"])
-def admin_logout():
-    session.pop("admin", None)
-    session.pop("panchayat_id", None)
-    return redirect("/admin/login")
-
-# -------------------- TOKEN ACTIONS --------------------
-@app.route("/serve_token/<int:tno>")
-def serve_token(tno):
+@app.route("/admin/counters_reload")
+def counters_reload():
     conn = get_db()
-    conn.execute(
-        "UPDATE tokens SET status='serving' WHERE token_number=?",
-        (tno,)
-    )
+    counters = conn.execute("SELECT * FROM counters").fetchall()
+    conn.close()
+    return render_template("admin_counters.html", counters=counters)
+
+
+# ---------------- ACTIVATE / DEACTIVATE COUNTERS ----------------
+
+@app.route("/activate_counter/<int:id>")
+def activate_counter(id):
+    p_id = session["panchayat_id"]
+    conn = get_db()
+    conn.execute("UPDATE counters SET is_active=1, panchayat_id=? WHERE id=?", (p_id, id))
     conn.commit()
     conn.close()
-    return "OK"
+    return jsonify({"status": "ok"})
 
-@app.route("/done_token/<int:tno>")
-def done_token(tno):
+
+@app.route("/deactivate_counter/<int:id>")
+def deactivate_counter(id):
     conn = get_db()
-
-    conn.execute(
-        "DELETE FROM tokens WHERE token_number=?",
-        (tno,)
-    )
-
+    conn.execute("UPDATE counters SET is_active=0, panchayat_id=NULL WHERE id=?", (id,))
     conn.commit()
     conn.close()
-    return "OK"
-
-
-@app.route("/cancel_token/<int:tno>")
-def cancel_token(tno):
+    return jsonify({"status": "ok"})
+    
+# ---------------- GET DROPDOWNS ----------------
+@app.route("/get_panchayats/<int:district_id>")
+def get_panchayats(district_id):
     conn = get_db()
-    conn.execute("DELETE FROM tokens WHERE token_number=?", (tno,))
+    cur = conn.cursor()
+    cur.execute("SELECT id, panchayat_name FROM panchayats WHERE district_id=?", (district_id,))
+    rows = cur.fetchall()
+    conn.close()
+    return jsonify([{"id": r["id"], "name": r["panchayat_name"]} for r in rows])
+
+
+@app.route("/get_wards/<panchayat_name>")
+def get_wards(panchayat_name):
+    conn = get_db()
+    cur = conn.cursor()
+
+    panchayat = cur.execute(
+        "SELECT id FROM panchayats WHERE TRIM(LOWER(panchayat_name)) = TRIM(LOWER(?))",
+        (panchayat_name,)
+    ).fetchone()
+
+    if not panchayat:
+        conn.close()
+        return jsonify([])
+
+    rows = cur.execute(
+        "SELECT ward_name FROM wards WHERE panchayat_id=?",
+        (panchayat["id"],)
+    ).fetchall()
+
+    conn.close()
+    return jsonify([{"name": r["ward_name"]} for r in rows])
+
+
+# ---------------- SERVE / DONE / CANCEL ----------------
+@app.route("/serve/<int:id>")
+def serve_token(id):
+    conn = get_db()
+    conn.execute("UPDATE tokens SET status='serving' WHERE id=?", (id,))
     conn.commit()
     conn.close()
-    return "OK"
+    return jsonify({"status": "ok"})
 
 
-# -------------------- LIVE STATUS --------------------
-@app.route("/user/status")
-def user_status():
-    token = session.get("user_token")
-    counter = session.get("user_counter")
+@app.route("/done/<int:id>")
+def done_token(id):
+    conn = get_db()
+    conn.execute("UPDATE tokens SET status='done' WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "ok"})
 
-    return render_template(
-        "user_status.html",
-        user_token=token,
-        user_counter=counter
-    )
+
+@app.route("/cancel/<int:id>")
+def cancel_token(id):
+    conn = get_db()
+    conn.execute("DELETE FROM tokens WHERE id=?", (id,))
+    conn.commit()
+    conn.close()
+    return jsonify({"status": "ok"})
+
+
+# ---------------- COUNTER LIVE DISPLAY ----------------
+@app.route("/display/<int:counter_no>")
+def display_counter(counter_no):
+    conn = get_db()
+    tokens = conn.execute("""
+        SELECT id, token_number, name, district, panchayat, ward, purpose, status
+        FROM tokens
+        WHERE counter_number=? AND status!='done'
+    """, (counter_no,)).fetchall()
+    conn.close()
+    return render_template("display.html", tokens=tokens, counter_no=counter_no)
+
+
+@app.route("/display_table_reload/<int:counter_no>")
+def display_table_reload(counter_no):
+    conn = get_db()
+    rows = conn.execute("""
+        SELECT id, token_number, name, district, panchayat, ward, purpose, status
+        FROM tokens
+        WHERE counter_number=? AND status!='done'
+    """, (counter_no,)).fetchall()
+    conn.close()
+
+    return render_template("display_rows.html", tokens=rows)
+
 
 @app.route("/live_data")
 def live_data():
     conn = get_db()
-
-    # serving tokens (correct lowercase)
-    serving = conn.execute(
-        "SELECT token_number, counter_number FROM tokens WHERE status='serving'"
-    ).fetchall()
-
-    # waiting tokens
     waiting = conn.execute(
         "SELECT COUNT(*) FROM tokens WHERE status='waiting'"
     ).fetchone()[0]
-
     conn.close()
 
-    serving_list = [
-        {"token": row["token_number"], "counter": row["counter_number"]}
-        for row in serving
-    ]
-
-    return jsonify({
-        "serving_list": serving_list,
-        "waiting_count": waiting
-    })
+    return jsonify({"waiting_count": waiting})
 
 
 @app.route("/live_data/<int:counter_no>")
 def live_data_counter(counter_no):
     conn = get_db()
-
-    serving = conn.execute(
-        "SELECT token_number FROM tokens WHERE status='serving' AND counter_number=?",
-        (counter_no,)
-    ).fetchone()
-
-    conn.close()
-
-    return jsonify({
-        "token": serving["token_number"] if serving else None
-    })
-
-@app.route("/all_tokens")
-def all_tokens():
-    conn = get_db()
-    rows = conn.execute(
-        "SELECT token_number, counter_number FROM tokens ORDER BY token_number"
-    ).fetchall()
-    conn.close()
-
-    return jsonify([
-        {"token": r["token_number"], "counter": r["counter_number"]} 
-        for r in rows
-    ])
-
-@app.route("/serve/<int:panchayat_id>", methods=["POST"])
-def serve_next(panchayat_id):
-    conn = get_db()
-    cur = conn.cursor()
-
-    # 1) Clear previous serving token
-    cur.execute("""
-        UPDATE tokens SET status='done'
-        WHERE status='serving' AND panchayat_id=?
-    """, (panchayat_id,))
-
-    # 2) Get next waiting token
-    cur.execute("""
-        SELECT id, token_number FROM tokens
-        WHERE status='waiting' AND panchayat_id=?
-        ORDER BY id ASC
-        LIMIT 1
-    """, (panchayat_id,))
-    next_token = cur.fetchone()
-
-    if next_token:
-        token_id = next_token["id"]
-
-        # Mark as serving
-        cur.execute("""
-            UPDATE tokens SET status='serving'
-            WHERE id=?
-        """, (token_id,))
-        conn.commit()
-        serving_number = next_token["token_number"]
-    else:
-        serving_number = None  # No token
-
-    conn.close()
-
-    return redirect("/admin/dashboard")
-
-@app.route("/user/services")
-def user_services():
-    return render_template("services.html")
-
-
-@app.route("/user/help")
-def user_help():
-    return render_template("help.html")
-
-@app.route("/reset_token")
-def reset_token():
-    session.pop("user_token", None)
-    session.pop("user_counter", None)
-    return "OK"
-
-# -------------------- DISPLAY PAGE PER COUNTER --------------------
-@app.route("/display/<int:counter_no>")
-def display(counter_no):
-    if not session.get("admin"):
-        return redirect("/admin/login")
-
-    p_id = session["panchayat_id"]
-
-    conn = get_db()
-    tokens = conn.execute("""
-        SELECT *
+    row = conn.execute("""
+        SELECT token_number 
         FROM tokens
-        WHERE counter_number=? AND panchayat_id=?
-        ORDER BY id DESC
-    """, (counter_no, p_id)).fetchall()
-
+        WHERE counter_number=? AND status='serving'
+        ORDER BY id DESC LIMIT 1
+    """, (counter_no,)).fetchone()
     conn.close()
 
-    return render_template("display.html", tokens=tokens, counter_no=counter_no)
-
-@app.route("/display_reload/<int:counter_no>")
-def display_reload(counter_no):
-    if not session.get("admin"):
-        return ""
-
-    p_id = session["panchayat_id"]
-
-    conn = get_db()
-    tokens = conn.execute("""
-        SELECT *
-        FROM tokens
-        WHERE counter_number=? AND panchayat_id=?
-        ORDER BY id DESC
-    """, (counter_no, p_id)).fetchall()
-
-    conn.close()
-
-    return render_template("display_rows.html", tokens=tokens)
+    return jsonify({"token": row["token_number"] if row else None})
 
 
-
+# ---------------- RUN ----------------
 if __name__ == "__main__":
     app.run(debug=True)
-

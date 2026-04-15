@@ -1,0 +1,21 @@
+{% for c in counters %}
+<tr>
+    <td>{{ c[1] }}</td>
+
+    <td>
+        {% if c[2] == 1 %}
+            <span style="color:green; font-weight:bold;">Active</span>
+        {% else %}
+            <span style="color:red; font-weight:bold;">Inactive</span>
+        {% endif %}
+    </td>
+
+    <td>
+        {% if c[2] == 1 %}
+            <button class="done-btn" onclick="toggleCounter({{ c[0] }}, false)">Deactivate</button>
+        {% else %}
+            <button class="serve-btn" onclick="toggleCounter({{ c[0] }}, true)">Activate</button>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}

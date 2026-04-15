@@ -360,3 +360,89 @@ body {
 .token-red {
     color: red !important;
 }
+
+/* Table look */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+}
+
+th {
+    background: #0066ff;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 14px;
+}
+
+tr:hover {
+    background: #f7faff;
+}
+
+/* Action column layout */
+.action-cell {
+    display: flex;
+    gap: 8px;
+}
+
+/* Buttons */
+.btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Button colors */
+.btn.serve {
+    background: #28a745;
+    color: white;
+}
+
+.btn.done {
+    background: #007bff;
+    color: white;
+}
+
+.btn.cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.btn.delete {
+    background: #e63946;
+    color: white;
+}
+
+/* Status colors */
+td:nth-child(8) {
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+td:nth-child(8):contains("waiting") {
+    color: orange;
+}
+
+td:nth-child(8):contains("serving") {
+    color: #007bff;
+}
+
+td:nth-child(8):contains("done") {
+    color: #28a745;
+}

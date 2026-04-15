@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Counters</title>
+</head>
+<body>
+
+<h2>Manage Counters</h2>
+
+<table border="1">
+    <tr>
+        <th>Counter</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    {% for c in counters %}
+    <tr>
+        <td>{{ c[1] }}</td>
+        <td>{{ "Active" if c[2] == 1 else "Inactive" }}</td>
+        <td>
+            {% if c[2] == 1 %}
+            <a href="/deactivate_counter/{{ c[0] }}">Deactivate</a>
+            {% else %}
+            <a href="/activate_counter/{{ c[0] }}">Activate</a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
